@@ -1,48 +1,69 @@
-# Artinmed — آرتین‌مد
+# Artinmed — physician-led medical care at home
 
-A Persian, right-to-left aesthetics clinic website inspired by the warm cream, gold and emerald visual direction of Lemon Clinic. Built specifically for `emadazadeh/Artinmed`, with original branding, copy and an original illustrative portrait.
+آرتین‌مد: ابتدا ویزیت آنلاین پزشک، سپس تعیین خدمت و هماهنگی تیم درمانی متناسب با نیاز بیمار.
 
-## Included
+## Current service lines
 
-- Responsive landing page, six service descriptions and category filtering.
-- Three-step appointment **requests**, with Persian dates, Iran phone-number normalization, server validation, explicit consent, persistent Cloudflare D1 records and a tracking reference.
-- Request tracking requires both the reference and the matching mobile number. Submissions are requests, never advertised as confirmed appointments.
-- Browser-only photo mirror: local JPG/PNG/WebP upload, brightness/warmth/saturation controls, before/after comparison and downloadable JPG. It does not simulate injectables, diagnose skin or predict treatment results. Photos are never uploaded.
-- Accessible native dialogs, keyboard navigation, focus restoration, reduced-motion support and self-hosted Vazirmatn.
+1. **Medical care at home:** online physician assessment; injections, IV therapy and other indicated home care are coordinated based on the physician's assessment.
+2. **Vaccination:** requests for HPV or other needed vaccines, subject to individual assessment, availability, storage/transport requirements and suitability for home delivery of care.
+3. **Botox at home:** initial assessment followed, when appropriate, by an in-person physician visit; the physician personally examines the patient and administers the injection.
 
-## Run
+The website presents Artinmed as a medical team with a physician-led model. It contains no invented clinician biographies, license numbers, ratings, clinic address, region of coverage, prices, vaccine inventory or around-the-clock availability claims.
 
-Requires Node 22.13+ and pnpm. The source includes the Vinext/Cloudflare Sites integration.
+## Request flow
+
+Visitors choose a service line, a preferred date/time for online physician contact, and provide name, mobile number and city. They receive a persistent request reference and can track it using the reference plus the matching mobile number.
+
+A submission is an **assessment request**, not a confirmed consultation, a prescription or an automatic team dispatch. The method and final time of the online consultation, coverage and downstream care are coordinated by the team. Live video consultation, prescribing, staff dispatch, notifications and a staff dashboard are not implemented or represented as automated capabilities.
+
+Only basic coordination information is collected by the form. It does not request diagnoses, medical records, photos or a street address. The prior beauty mirror and generic aesthetics service offering have been removed from the product.
+
+## Data and migration
+
+Cloudflare D1 stores requests in `appointments`. Migration `0001_useful_warhawk.sql` adds a nullable `city` column without altering or deleting earlier records. New requests require city information. Existing references and former service names remain readable through tracking; old service IDs cannot create new requests.
+
+Requests enforce known service IDs, allowed preference dates/times, valid Iranian mobile numbers (including Persian/Arabic digits), consent, a honeypot, a request idempotency key and a limit of three requests per mobile number in 24 hours. Tracking never returns a person's name, mobile number or city.
+
+## Development
+
+Requires Node 22.13+ and pnpm. The project uses Vinext with the maintained Cloudflare Sites integration.
 
 ```sh
 pnpm install --frozen-lockfile
-pnpm build
-node --import ./scripts/sites-env.mjs ./node_modules/wrangler/bin/wrangler.js d1 execute DB --local --config dist/server/wrangler.json --persist-to .wrangler/state --file drizzle/0000_same_rattler.sql
-pnpm dev
-```
-
-Apply each local SQL migration once. `pnpm start` serves the production Worker locally after a build. Production and local D1 databases are separate. The Sites publisher provisions the `DB` binding and applies committed migrations during deployment.
-
-```sh
 pnpm typecheck
 pnpm test
 pnpm build
 ```
 
-## Content and operations
+For a fresh local D1 database, apply each committed SQL migration in order, once:
 
-Service copy is in `lib/clinic-data.ts`; the main layout and brand are in `components/clinic-home.tsx` and `components/icons.tsx`. Styling is in `app/globals.css`.
+```sh
+node --import ./scripts/sites-env.mjs ./node_modules/wrangler/bin/wrangler.js d1 execute DB --local --config dist/server/wrangler.json --persist-to .wrangler/state --file drizzle/0000_same_rattler.sql
+node --import ./scripts/sites-env.mjs ./node_modules/wrangler/bin/wrangler.js d1 execute DB --local --config dist/server/wrangler.json --persist-to .wrangler/state --file drizzle/0001_useful_warhawk.sql
+pnpm dev
+```
 
-The source deliberately contains no invented physician biographies, testimonials, medical license numbers, treatment prices, telephone numbers or clinic addresses. Supply verified clinic details before a public launch. The generated model portrait is labeled as illustrative in the page. `robots` is set to no-index for the current private review deployment.
+For an existing local database, apply only pending migrations. Sites applies pending hosted migrations when publishing. Keep `.openai/hosting.json` and the existing Site identity. Deployment remains owner-private and the page is no-index for review.
 
-The initial deployment is private to its owner. It has a real request database; it does not send SMS, send emails or automatically confirm appointments. Requests remain `pending` until a clinic operator processes them. A staff scheduling dashboard and notification provider are not included in this version. Authorized operators can inspect the D1 `appointments` table through the hosting management tools. Do not expose that table or add an unprotected request-list endpoint.
+## Source map
 
-The API enforces same-origin JSON writes, consent, known services, allowed dates/times, an idempotency key, and a limit of three submissions per mobile number in 24 hours. Tracking discloses only service, preferred date/time, reference and status, never a person's name or number. A production clinic should set its retention period and staff access policy before collecting patient requests publicly.
+- `components/clinic-home.tsx`: physician-led landing page and three service lines.
+- `lib/clinic-data.ts`: service descriptions, FAQ and legacy tracking names.
+- `components/booking-dialog.tsx`: assessment request and tracking UI.
+- `lib/booking.ts`: validation, phone normalization and Tehran dates.
+- `app/api/appointments/`: persistent request and tracking handlers.
+- `db/schema.ts` and `drizzle/`: data model and append-only migrations.
+- `app/globals.css`: responsive Persian layout, cream/emerald/gold identity.
 
-## Assets
+## Assets and clinical copy
 
-- `public/images/hero.webp`: original generated illustrative portrait, optimized locally for this website. Generated with the built-in ImageGen tool. Prompt: “Premium editorial natural skincare portrait of an Iranian woman, modest ivory blouse, realistic skin texture, warm cream studio backdrop with soft leafy shadows; refined natural beauty, no text or logo.”
-- `public/fonts/Vazirmatn.woff2`: Vazirmatn, distributed under the SIL Open Font License; see `public/fonts/OFL.txt`.
-- Native SVG brand and interface icons are in the source. No Lemon Clinic logo, physician photo, reviews or contact details were reused.
+`public/images/home-care.webp` is a generated illustrative image, not an actual physician or patient. Created with the built-in ImageGen tool and optimized for the site. Prompt: “An Iranian physician in emerald scrubs listening to a mature female patient in a calm cream-and-green domestic living room; tablet, natural light, no procedures, no text or logos; vertical editorial healthcare photograph.”
 
-The project contains no GitHub token or other application secret. Build output, local databases and environment files are ignored.
+Vazirmatn is self-hosted under the SIL Open Font License in `public/fonts/OFL.txt`. Brand and UI icons are native SVG.
+
+The site gives no individualized treatment, dosing or vaccine schedule advice. Clinical copy keeps vaccine selection and suitability conditional on assessment and includes transport/storage checks. Reference sources:
+
+- WHO, HPV vaccine delivery guidance: https://iris.who.int/items/f927e154-96e7-4151-8853-c0b18c5a40c6
+- FDA, botulinum toxin products and qualified healthcare providers: https://www.fda.gov/news-events/press-announcements/fda-warns-companies-over-illegal-marketing-botox-and-related-products
+
+No GitHub token or application secret is stored in the project.

@@ -8,6 +8,13 @@
       "when": 1792801480782,
       "tag": "0000_same_rattler",
       "breakpoints": true
+    },
+    {
+      "idx": 1,
+      "version": "6",
+      "when": 1792802773964,
+      "tag": "0001_useful_warhawk",
+      "breakpoints": true
     }
   ]
 }
