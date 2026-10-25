@@ -12,7 +12,7 @@ export async function POST(request: Request) {
   try { raw = JSON.parse(text); if (!raw || typeof raw !== "object") throw new Error(); } catch { return reply({ error: "اطلاعات معتبر وارد کنید." }, 400); }
   const phone = typeof raw.phone === "string" ? normalizePhone(raw.phone) : "";
   const reference = typeof raw.reference === "string" ? raw.reference.trim().toUpperCase() : "";
-  if (!/^09\d{9}$/.test(phone) || !/^ART-[A-F0-9]{10}$/.test(reference)) return reply({ error: "کد پیگیری و شمارهٔ همراه را بررسی کنید." }, 400);
+  if (!/^09\d{9}$/.test(phone) || !/^(?:ART|DRR)-[A-F0-9]{10}$/.test(reference)) return reply({ error: "کد پیگیری و شمارهٔ همراه را بررسی کنید." }, 400);
   try {
     const found = await getDb().select({ reference: appointments.reference, service: appointments.service, date: appointments.preferredDate, time: appointments.preferredTime, status: appointments.status }).from(appointments).where(and(eq(appointments.reference, reference), eq(appointments.phone, phone))).get();
     if (!found) return reply({ error: "درخواستی با این کد و شماره پیدا نشد." }, 404);

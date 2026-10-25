@@ -22,7 +22,7 @@ export async function POST(request: Request) {
     const now = Date.now();
     const recent = await db.select({ total: count() }).from(appointments).where(and(eq(appointments.phone, data.phone), gte(appointments.createdAt, now - 86400000))).get();
     if ((recent?.total ?? 0) >= 3) return reply({ error: "برای این شماره امروز سه درخواست ثبت شده است. از بخش پیگیری، وضعیت را بررسی کنید." }, 429);
-    const reference = "ART-" + crypto.randomUUID().replace(/-/g, "").slice(0, 10).toUpperCase();
+    const reference = "DRR-" + crypto.randomUUID().replace(/-/g, "").slice(0, 10).toUpperCase();
     await db.insert(appointments).values({ id: crypto.randomUUID(), requestId: data.requestId, reference, name: data.name, phone: data.phone, city: data.city, service: data.service, preferredDate: data.date, preferredTime: data.time, status: "pending", createdAt: now, consentAt: now }).onConflictDoNothing({ target: appointments.requestId });
     const saved = await db.select({ reference: appointments.reference }).from(appointments).where(and(eq(appointments.requestId, data.requestId), eq(appointments.phone, data.phone))).get();
     if (!saved) return reply({ error: "ثبت درخواست انجام نشد. دوباره تلاش کنید." }, 409);

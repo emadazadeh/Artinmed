@@ -32,5 +32,5 @@ export function Icon({ name, size = 22, className = "", style }: { name: IconNam
   return <svg width={size} height={size} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" className={className} style={style} aria-hidden="true">{paths[name]}</svg>;
 }
 export function Brand({ light = false }: { light?: boolean }) {
-  return <a className={`brand ${light ? "brand-light" : ""}`} href="#home" aria-label="آرتین‌مد، صفحهٔ اصلی"><span className="brand-symbol" aria-hidden="true"><svg viewBox="0 0 40 48" fill="none"><path d="M6 39V20C6 1 34 1 34 20v19M13 38l7-19 7 19M16 30h8" stroke="currentColor" strokeWidth="1.4" /><path d="M20 16c0-7 7-9 9-8 0 6-4 9-9 8Z" stroke="currentColor" strokeWidth="1.2" /></svg></span><span className="brand-type">آرتین‌مد<span lang="en" dir="ltr">ARTINMED</span></span></a>;
+  return <a className={`brand ${light ? "brand-light" : ""}`} href="#home" aria-label="دکتر رسون، صفحهٔ اصلی"><span className="brand-symbol" aria-hidden="true"><svg viewBox="0 0 40 48" fill="none"><path d="M9 39V9h9c20 0 20 30 0 30H9ZM24 19v10m-5-5h10" stroke="currentColor" strokeWidth="1.4" /><path d="M5 44h30" stroke="currentColor" strokeWidth="1.2" /></svg></span><span className="brand-type">دکتر رسون<span lang="en" dir="ltr">DOCTOR RESOON</span></span></a>;
 }

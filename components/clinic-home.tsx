@@ -86,13 +86,13 @@ export default function ClinicHome() {
               <span className="image-card-icon"><Icon name="stethoscope" size={25} /></span>
               <div>پزشک، نقطهٔ شروع مراقبت.<small>ویزیت آنلاین و هماهنگی تیم درمانی</small></div>
             </div>
-            <span className="concept-caption">تصویر مفهومی؛ پزشک یا بیمار واقعی آرتین‌مد نیست.</span>
+            <span className="concept-caption">تصویر مفهومی؛ پزشک یا بیمار واقعی دکتر رسون نیست.</span>
           </div>
         </div>
         <div className="container hero-bottom">
           <span lang="en">PHYSICIAN FIRST. CARE AT HOME.</span>
           <a href="#workflow">مسیر دریافت خدمت را ببینید<Icon name="arrow-down" size={17} /></a>
-          <span className="hero-bottom-mark">ARTINMED <i>+</i> HOME CARE</span>
+          <span className="hero-bottom-mark">DOCTOR RESOON <i>+</i> HOME CARE</span>
         </div>
       </section>
 
@@ -128,7 +128,7 @@ export default function ClinicHome() {
         <div className="container">
           <div className="care-workflow-heading">
             <div><span className="eyebrow light">FROM ASSESSMENT TO HOME CARE</span><h2 id="workflow-title">ابتدا <em>ارزیابی پزشک.</em><br />سپس، اعزامِ متناسب.</h2></div>
-            <p>در آرتین‌مد، انتخاب خدمت در فرم، آغاز بررسی است. تصمیم دربارهٔ نیاز درمانی، مناسب بودن مراقبت در منزل و ترکیب تیم اعزامی با پزشک است.</p>
+            <p>در دکتر رسون، انتخاب خدمت در فرم، آغاز بررسی است. تصمیم دربارهٔ نیاز درمانی، مناسب بودن مراقبت در منزل و ترکیب تیم اعزامی با پزشک است.</p>
           </div>
           <ol className="care-steps">
             {careSteps.map(step => <li key={step.number}>
@@ -148,7 +148,7 @@ export default function ClinicHome() {
           <div className="philosophy-intro">
             <span className="eyebrow">A MEDICAL TEAM, BUILT AROUND YOU</span>
             <h2 id="team-title">پشت هر اعزام،<br />یک <em>تصمیم پزشکی.</em></h2>
-            <p>آرتین‌مد یک تیم پزشکی با مدل ویزیت آنلاین و مراقبت در منزل است. اول نیاز بیمار مشخص می‌شود؛ بعد خدمت و فرد مناسب برای انجام آن انتخاب می‌شوند.</p>
+            <p>دکتر رسون یک تیم پزشکی با مدل ویزیت آنلاین و مراقبت در منزل است. اول نیاز بیمار مشخص می‌شود؛ بعد خدمت و فرد مناسب برای انجام آن انتخاب می‌شوند.</p>
             <p>در مسیر بوتاکس، حضور شخص پزشک بخش اصلی خدمت است؛ معاینه و تزریق را خود پزشک انجام می‌دهد.</p>
             <button className="text-link" onClick={() => openBooking()}>درخواست ارزیابی پزشک<Icon name="arrow" size={19} /></button>
           </div>
@@ -186,7 +186,7 @@ export default function ClinicHome() {
       </div>
       <div className="container care-scope-note">این سامانه برای خدمات غیراورژانسی است. در وضعیت اورژانسی، برای رسیدگی فوری با اورژانس تماس بگیرید.</div>
       <div className="container footer-bottom">
-        <span>© {new Date().getFullYear()} آرتین‌مد. تمامی حقوق محفوظ است.</span>
+        <span>© {new Date().getFullYear()} دکتر رسون. تمامی حقوق محفوظ است.</span>
         <button onClick={() => setPrivacy(true)}>حریم خصوصی</button>
         <span lang="en">MEDICAL CARE, AROUND YOU</span>
       </div>

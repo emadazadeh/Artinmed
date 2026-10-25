@@ -1,6 +1,8 @@
-# Artinmed — physician-led medical care at home
+# Doctor Resoon — دکتر رسون
 
-آرتین‌مد: ابتدا ویزیت آنلاین پزشک، سپس تعیین خدمت و هماهنگی تیم درمانی متناسب با نیاز بیمار.
+مرجع اطلاعات کسب‌وکار: [doctor-resoon-brief.md](docs/doctor-resoon-brief.md)
+
+دکتر رسون: ابتدا ویزیت آنلاین پزشک، سپس تعیین خدمت و هماهنگی تیم درمانی متناسب با نیاز بیمار.
 
 ## Current service lines
 
@@ -8,7 +10,7 @@
 2. **Vaccination:** requests for HPV or other needed vaccines, subject to individual assessment, availability, storage/transport requirements and suitability for home delivery of care.
 3. **Botox at home:** initial assessment followed, when appropriate, by an in-person physician visit; the physician personally examines the patient and administers the injection.
 
-The website presents Artinmed as a medical team with a physician-led model. It contains no invented clinician biographies, license numbers, ratings, clinic address, region of coverage, prices, vaccine inventory or around-the-clock availability claims.
+The website presents Doctor Resoon as a medical team with a physician-led model. It contains no invented clinician biographies, license numbers, ratings, clinic address, region of coverage, prices, vaccine inventory or around-the-clock availability claims.
 
 ## Request flow
 
