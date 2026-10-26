@@ -71,6 +71,7 @@ Responsive WebP images serve smaller versions of the founder portrait. The socia
 - `app/services/[service]/page.tsx` and `lib/service-guides.ts`: service guides, FAQs and metadata.
 - `lib/site.ts`: public origin, metadata and structured data.
 - `lib/brand.ts`: owner-supplied founder identity and public contact details.
+- `lib/upcoming-services.ts`: non-bookable roadmap items from the owner's handwritten plan; these stay outside booking validation and service structured data.
 - `lib/booking.ts`: validation, phone normalization and Tehran dates.
 - `lib/request-body.ts`: byte-limited JSON buffering and safe request-body draining.
 - `app/api/appointments/`: persistent request and tracking handlers.

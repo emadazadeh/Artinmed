@@ -1,6 +1,7 @@
 import { services, faqs } from "@/lib/clinic-data";
 import { pageSchema, site } from "@/lib/site";
 import { contact, founder } from "@/lib/brand";
+import { upcomingServices } from "@/lib/upcoming-services";
 import { Icon, type IconName } from "./icons";
 import { BookingButton } from "./booking-provider";
 import SiteFrame from "./site-frame";
@@ -77,6 +78,10 @@ export default function ClinicHome() {
             </a>)}
           </div>
           <p className="service-disclaimer">نوع خدمت، امکان ارائه در منزل و تیم اعزامی پس از ارزیابی پزشک و بررسی محدودهٔ شما مشخص می‌شوند.</p>
+          <section className="upcoming-services" aria-labelledby="upcoming-title">
+            <div className="upcoming-heading"><div><span className="eyebrow">در برنامهٔ توسعهٔ دکتر رسون</span><h3 id="upcoming-title">مسیرهای بعدی مراقبت</h3></div><p>اطلاعات و شرایط دریافت این خدمات پس از نهایی‌شدن، در همین بخش اعلام می‌شوند.</p></div>
+            <div className="upcoming-grid">{upcomingServices.map(service => <article className="upcoming-card" key={service.id}><span className="upcoming-icon"><Icon name={service.icon} size={25} /></span><div><div className="upcoming-card-heading"><h4>{service.name}</h4><span className="upcoming-status"><Icon name="clock" size={13} />به‌زودی</span></div><p>{service.description}</p></div></article>)}</div>
+          </section>
         </div>
       </section>
 
