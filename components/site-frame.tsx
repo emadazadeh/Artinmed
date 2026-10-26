@@ -1,0 +1,24 @@
+import type { ReactNode } from "react";
+import { services } from "@/lib/clinic-data";
+import { BookingButton, BookingProvider, TrackingButton } from "./booking-provider";
+import { Brand, Icon } from "./icons";
+import SiteHeader from "./site-header";
+
+export default function SiteFrame({ children }: { children: ReactNode }) {
+  return <BookingProvider><div className="home-care-page">
+    <a className="skip-link" href="#main">رفتن به محتوای اصلی</a>
+    <div className="announcement"><Icon name="stethoscope" size={15} /><span>پزشک‌محور؛ از ویزیت آنلاین تا مراقبت در منزل</span><span className="announcement-en" lang="en">PHYSICIAN-LED HOME CARE</span></div>
+    <SiteHeader />
+    {children}
+    <footer className="site-footer">
+      <div className="container footer-top">
+        <div className="footer-brand"><Brand light /><p>ویزیت آنلاین پزشک؛ مراقبت متناسب در منزل.</p></div>
+        <nav className="footer-links" aria-label="پیوندهای خدمات">{services.map(service => <a key={service.id} href={`/services/${service.id}`}>{service.name}</a>)}<TrackingButton>پیگیری درخواست</TrackingButton></nav>
+        <div className="footer-note"><Icon name="shield" size={24} /><p>هر خدمت، متناسب با ارزیابی پزشکی.<small>ثبت درخواست به معنی اعزام فوری یا تأیید نهایی نیست.</small></p></div>
+      </div>
+      <div className="container care-scope-note">این سامانه برای خدمات غیراورژانسی است. در وضعیت اورژانسی، برای رسیدگی فوری با اورژانس تماس بگیرید.</div>
+      <div className="container footer-bottom"><span>© {new Date().getFullYear()} دکتر رسون. تمامی حقوق محفوظ است.</span><a href="/privacy">حریم خصوصی</a><span lang="en">MEDICAL CARE, AROUND YOU</span></div>
+    </footer>
+    <div className="mobile-booking"><BookingButton><Icon name="video" size={19} />درخواست ویزیت آنلاین<Icon name="arrow" size={18} /></BookingButton><TrackingButton className="mobile-track" label="پیگیری درخواست"><Icon name="search" size={22} /></TrackingButton></div>
+  </div></BookingProvider>;
+}

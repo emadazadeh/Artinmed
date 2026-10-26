@@ -45,17 +45,34 @@ node --import ./scripts/sites-env.mjs ./node_modules/wrangler/bin/wrangler.js d1
 pnpm dev
 ```
 
-For an existing local database, apply only pending migrations. Sites applies pending hosted migrations when publishing. Keep `.openai/hosting.json` and the existing Site identity. Deployment remains owner-private and the page is no-index for review.
+For an existing local database, apply only pending migrations. Sites applies pending hosted migrations when publishing. Keep `.openai/hosting.json` and the existing Site identity. The existing Site is public at https://doctor-resoon.cometolive34.chatgpt.site; its audience was confirmed through Sites before enabling indexing. Preserve its audience when publishing.
+
+## SEO and page structure
+
+The home page and three service guides render their content on the server. Booking and tracking remain lazy-loaded interactive components, with intent-based preloading on focus or hover. Service cards and footer links lead to crawlable pages:
+
+- `/services/medical-care`
+- `/services/vaccination`
+- `/services/home-botox`
+- `/privacy`
+
+`lib/site.ts` is the single source for the confirmed public origin. Update it when moving to a custom domain, then rebuild and publish so canonicals, social metadata, JSON-LD and the sitemap all agree. `/robots.txt` allows public pages and excludes API crawling; `/sitemap.xml` lists the five public pages. API responses also carry `noindex` and `no-store` headers. JSON-LD describes only known services and visible FAQ content; it makes no clinician, rating, price or coverage claims. Search engines decide indexing and search enhancements.
+
+Responsive WebP images serve smaller versions of the hero photograph. The social sharing card is a static 1200×630 PNG using the existing illustrative image. The local font and medical copy constraints remain in place.
 
 ## Source map
 
 - `components/clinic-home.tsx`: physician-led landing page and three service lines.
 - `lib/clinic-data.ts`: service descriptions, FAQ and legacy tracking names.
 - `components/booking-dialog.tsx`: assessment request and tracking UI.
+- `components/booking-provider.tsx` and `components/site-frame.tsx`: shared booking actions, header and footer.
+- `app/services/[service]/page.tsx` and `lib/service-guides.ts`: service guides, FAQs and metadata.
+- `lib/site.ts`: public origin, metadata and structured data.
 - `lib/booking.ts`: validation, phone normalization and Tehran dates.
+- `lib/request-body.ts`: byte-limited JSON buffering and safe request-body draining.
 - `app/api/appointments/`: persistent request and tracking handlers.
 - `db/schema.ts` and `drizzle/`: data model and append-only migrations.
-- `app/globals.css`: responsive Persian layout, cream/emerald/gold identity.
+- `app/globals.css` and `app/site-pages.css`: responsive Persian layout, cream/emerald/gold identity.
 
 ## Assets and clinical copy
 

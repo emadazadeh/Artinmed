@@ -1,17 +1,21 @@
-import type { Metadata } from "next";
+import type { Metadata, Viewport } from "next";
+import { site } from "@/lib/site";
 import "./globals.css";
+import "./site-pages.css";
 
 export const metadata: Metadata = {
-  title: "دکتر رسون | ویزیت آنلاین پزشک و خدمات پزشکی در منزل",
-  description: "ابتدا ویزیت آنلاین پزشک، سپس اعزام تیم درمانی متناسب با نیاز بیمار؛ خدمات پزشکی، واکسیناسیون و بوتاکس در منزل توسط پزشک.",
+  metadataBase: new URL(site.url),
+  title: { default: site.title, template: "%s | دکتر رسون" },
+  description: site.description,
   applicationName: "Doctor Resoon",
-  robots: { index: false, follow: false },
-  openGraph: { title: "دکتر رسون | مراقبت در منزل با راهبری پزشک", description: "ویزیت آنلاین و هماهنگی تیم درمانی برای مراقبت در منزل، واکسیناسیون و بوتاکس توسط پزشک.", locale: "fa_IR", type: "website" },
+  robots: { index: true, follow: true, googleBot: { index: true, follow: true, "max-image-preview": "large" } },
   icons: {
     icon: "/favicon.svg",
     shortcut: "/favicon.svg",
   },
 };
+
+export const viewport: Viewport = { width: "device-width", initialScale: 1, themeColor: "#174e42", colorScheme: "light" };
 
 export default function RootLayout({
   children,

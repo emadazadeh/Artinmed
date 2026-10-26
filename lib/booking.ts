@@ -28,8 +28,12 @@ export function validateBooking(input: unknown, now = new Date()): { data: Booki
   if (typeof raw.time !== "string" || !timeSlots.some(t => t === raw.time)) return { error: "ساعت ترجیحی را انتخاب کنید." };
   if (raw.consent !== true) return { error: "برای ثبت درخواست، موافقت با استفاده از اطلاعات تماس لازم است." };
   if (typeof raw.website === "string" && raw.website.length > 0) return { error: "ثبت درخواست انجام نشد." };
-  if (typeof raw.requestId !== "string" || !/^[a-f0-9-]{36}$/.test(raw.requestId)) return { error: "فرم را دوباره باز کنید و تلاش کنید." };
+  if (typeof raw.requestId !== "string" || !/^[a-f0-9]{8}(?:-[a-f0-9]{4}){3}-[a-f0-9]{12}$/.test(raw.requestId)) return { error: "فرم را دوباره باز کنید و تلاش کنید." };
   return { data: { name, phone, city, service: raw.service, date: raw.date, time: raw.time, consent: true, requestId: raw.requestId } };
+}
+
+export function matchesBooking(saved: { phone: string; name: string; city: string | null; service: string; preferredDate: string; preferredTime: string }, input: BookingInput) {
+  return saved.phone === input.phone && saved.name === input.name && saved.city === input.city && saved.service === input.service && saved.preferredDate === input.date && saved.preferredTime === input.time;
 }
 export function hasTrustedOrigin(request: Request) {
   const origin = request.headers.get("origin"); if (!origin) return false;

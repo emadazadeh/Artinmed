@@ -1,0 +1,81 @@
+/* Shared refinements and the service guide pages. */
+:root{--gold:#856136;--muted:#596652}
+html{scroll-padding-top:24px}
+main:focus,.booking-stage:focus{outline:none}
+.nav-tracking{display:inline-flex;align-items:center;gap:7px;font-size:11px;min-height:44px;white-space:nowrap;padding:4px 0}
+.nav-shell{gap:24px}
+.footer-links a,.footer-links button{line-height:1.9;text-align:start}
+.footer-links a:hover,.footer-bottom a:hover{text-decoration:underline;text-underline-offset:5px}
+.footer-bottom a{padding-block:5px}
+.home-care-page .hero-note span:not(.note-icon){font-size:11px;color:#626e5b}
+.home-care-page .concept-caption{font-size:9px;color:#626e5b}
+.service-disclaimer{color:#626e5b}
+.care-card:not(.care-medical-care) .card-index,.care-card:not(.care-medical-care) .service-english,.care-card:not(.care-medical-care)>p,.philosophy-intro>p,.section-heading>p,.faq-list details>p,.faq-grid>div>p{color:#596652}
+.care-card .card-index{font-size:11px}
+.care-card .service-english{font-size:9px;letter-spacing:1px}
+.team-role p{color:#626e5b;font-size:12px}
+.team-role strong{font-size:12px}
+.care-scope-note{font-size:12px}
+.service-card:focus-visible{outline-offset:5px;transform:translateY(-3px)}
+.breadcrumbs{display:flex;flex-wrap:wrap;gap:7px 12px;align-items:center;font-size:12px;color:#65715e;margin-bottom:42px;line-height:2}
+.breadcrumbs a{text-decoration:underline;text-decoration-color:#c4c9b6;text-underline-offset:5px}
+.breadcrumbs [aria-current]{color:var(--green)}
+.service-hero{padding-top:32px;background:radial-gradient(ellipse at 15% 80%,#e4e9da 0,transparent 60%);border-bottom:1px solid var(--line)}
+.service-hero-grid{display:grid;grid-template-columns:minmax(0,1.35fr) minmax(0,1fr);gap:75px;align-items:center}
+.service-hero h1{font-size:clamp(30px,3.5vw,46px);line-height:1.8;letter-spacing:-1.1px;margin-top:18px;max-width:650px}
+.service-lead{font-size:15px;line-height:2.25;color:#626e5b;margin-top:20px;margin-bottom:30px;max-width:640px}
+.request-note{font-size:12px;line-height:2.1;color:#626e5b;margin-top:17px;max-width:450px}
+.service-overview{border:1px solid #d9dfce;background:var(--paper);border-radius:18px;padding:34px 30px;box-shadow:0 18px 45px #174e4206}
+.service-overview-icon{display:inline-flex;align-items:center;justify-content:center;width:76px;height:76px;background:#eef1e5;border-radius:50%;color:var(--green);margin-bottom:23px}
+.service-overview h2{font-size:23px;letter-spacing:0}
+.service-overview ul{list-style:none;padding:0;margin:22px 0}
+.service-overview li{display:flex;align-items:flex-start;gap:10px;font-size:14px;padding-block:10px;line-height:2}
+.service-overview li svg{color:var(--gold);margin-top:5px}
+.service-overview>p{display:flex;align-items:flex-start;gap:10px;border-top:1px solid var(--line);padding-top:20px;font-size:12px;line-height:2;color:#626e5b}
+.service-overview>p svg{margin-top:4px;color:var(--gold)}
+.service-content-grid{display:grid;grid-template-columns:minmax(0,1.4fr) minmax(0,1fr);gap:85px;align-items:start}
+.service-guide h2{font-size:30px;line-height:1.9;margin:12px 0 22px}
+.service-guide p,.preparation-list{font-size:15px;line-height:2.3;color:#626e5b}
+.service-guide h3{font-size:21px;margin:30px 0 14px}
+.preparation-list{padding-inline-start:22px;margin:0}
+.preparation-list li{padding-inline-start:7px;margin-bottom:13px}
+.preparation-list li::marker{color:var(--gold)}
+.service-coordination{border-radius:16px;background:#eaf0e4;padding:30px;margin-top:10px}
+.service-coordination>svg{color:var(--green)}
+.service-coordination h3{margin:16px 0 13px;font-size:22px}
+.service-coordination p{font-size:14px}
+.service-coordination .text-link{margin-top:16px;font-size:13px;gap:12px}
+.privacy-link{display:block;color:#53644d;text-decoration:underline;text-underline-offset:5px;font-size:12px;margin-top:20px}
+.related-services{border-top:1px solid var(--line)}
+.related-services h2{font-size:28px;margin-bottom:30px}
+.related-grid{display:grid;grid-template-columns:1fr 1fr;gap:22px}
+.related-grid>a{display:flex;align-items:flex-start;gap:17px;border:1px solid #dce0d2;border-radius:12px;padding:25px;background:var(--paper);transition:border-color .2s,box-shadow .2s}
+.related-grid>a:hover{border-color:#9da98f;box-shadow:0 8px 24px #174e4208}
+.related-grid>a>svg{color:var(--gold);margin-top:5px}
+.related-grid h3{font-size:18px;line-height:1.9}
+.related-grid p{font-size:13px;line-height:2.1;color:#626e5b;margin-top:8px}
+.related-grid>a>svg:last-child{margin-inline-start:auto}
+.policy-content{max-width:850px}
+.policy-content h1{font-size:36px;line-height:1.9;margin:14px 0 20px}
+.policy-content h2{font-size:23px;margin:35px 0 13px;letter-spacing:0}
+.policy-content p{font-size:15px;line-height:2.4;color:#626e5b}
+.policy-content .policy-intro{font-size:17px}
+.policy-content>.text-link{margin-top:35px}
+.not-found{min-height:40vh}
+.not-found h1{font-size:36px;margin-block:16px}
+.not-found>p{margin-bottom:25px}
+.booking-stage:focus{scroll-margin-top:20px}
+.form-error:focus{outline:2px solid #a45135;outline-offset:3px}
+.booking-tabs button{min-height:44px}
+.booking-tabs button,.booking-steps li,.field-heading small,.info-note,.mini-summary span,.booking-path-note p,.booking-city-note,.secure-note,.copy-status,.booking-success>p,.booking-summary>span{color:#596652}
+.booking-tabs button.selected,.booking-services button{color:var(--green)}
+.booking-steps li:not(.current)>span{color:#596652}
+.form-error{color:#8c3e25}
+.booking-form input:disabled{opacity:.7;cursor:wait}
+@media(max-width:1200px){.nav-tracking{display:none}.service-hero-grid,.service-content-grid{gap:45px}}
+@media(max-width:900px){.service-hero-grid{grid-template-columns:minmax(0,1.15fr) minmax(0,1fr);gap:28px}.service-overview{padding:25px}.service-overview h2{font-size:20px}.service-overview li{font-size:12px}.service-content-grid{gap:30px}.service-coordination{padding:24px}.service-guide h2{font-size:26px}.service-coordination h3{font-size:19px}.service-guide p,.preparation-list{font-size:14px}.related-grid>a{padding:20px;gap:12px}.related-grid h3{font-size:16px}}
+@media(max-width:640px){
+  .nav-shell{gap:12px}.home-care-page .hero-note span:not(.note-icon){font-size:10px}.home-care-page .concept-caption{font-size:8px;left:12px}.service-disclaimer{font-size:11px}.team-role p,.team-role strong{font-size:11px}.care-scope-note{font-size:11px;line-height:2.2}.footer-links{font-size:12px;max-width:100%;gap:17px 20px}.footer-bottom{font-size:10px}
+  .service-hero{padding-top:22px;padding-bottom:48px}.breadcrumbs{font-size:11px;gap:5px 9px;margin-bottom:30px}.service-hero-grid,.service-content-grid,.related-grid{grid-template-columns:1fr;gap:30px}.service-hero h1{font-size:31px;line-height:1.9;margin-top:14px}.service-hero .eyebrow{font-size:9px;letter-spacing:1px}.service-lead{font-size:14px;margin-top:17px;margin-bottom:23px}.service-hero .button{font-size:12px;white-space:normal;min-height:52px;padding-inline:20px}.request-note{font-size:11px;max-width:100%}.service-overview{padding:26px}.service-overview-icon{width:63px;height:63px;margin-bottom:19px}.service-overview-icon svg{width:35px;height:35px}.service-overview h2{font-size:22px}.service-overview li{font-size:13px}.service-guide h2{font-size:25px}.service-guide h3{font-size:20px}.service-guide p,.preparation-list{font-size:14px}.service-coordination{margin-top:0;padding:26px}.service-coordination h3{font-size:21px}.service-coordination .text-link{font-size:12px;gap:9px}.related-services h2{font-size:24px}.related-grid{gap:15px}.related-grid>a{padding:22px 19px}.related-grid h3{font-size:17px}.related-grid p{font-size:12px}.policy-content h1{font-size:29px}.policy-content h2{font-size:22px}.policy-content p{font-size:14px}.policy-content .policy-intro{font-size:15px}.not-found h1{font-size:29px}.not-found>p{font-size:13px}
+}
+@media(prefers-reduced-motion:reduce){.related-grid>a{transition:none}}

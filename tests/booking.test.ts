@@ -1,6 +1,6 @@
 import test from "node:test";
 import assert from "node:assert/strict";
-import { availableDates, hasTrustedOrigin, normalizePhone, tehranToday, validateBooking } from "../lib/booking.ts";
+import { availableDates, hasTrustedOrigin, matchesBooking, normalizePhone, tehranToday, validateBooking } from "../lib/booking.ts";
 import { serviceName } from "../lib/clinic-data.ts";
 const now = new Date("2026-10-24T12:00:00Z");
 const valid = { name: "مراجع آزمایشی", phone: "۰۹۱۲۱۲۳۴۵۶۷", city: "شهر آزمایشی", service: "medical-care", date: availableDates(now)[0], time: "10:00", consent: true, requestId: "12345678-1234-1234-1234-123456789abc" };
@@ -33,4 +33,16 @@ test("cross-site and missing origins are rejected", () => {
   assert.equal(hasTrustedOrigin(new Request("https://clinic.example/api/appointments", { headers: { origin: "https://clinic.example" } })), true);
   assert.equal(hasTrustedOrigin(new Request("https://clinic.example/api/appointments", { headers: { origin: "https://other.example" } })), false);
   assert.equal(hasTrustedOrigin(new Request("https://clinic.example/api/appointments")), false);
+});
+
+test("idempotent retries must match every saved booking field, including after a concurrent insert", () => {
+  const result = validateBooking(valid, now);
+  assert.ok(result.data);
+  const data = result.data;
+  const saved = { ...data, preferredDate: data.date, preferredTime: data.time };
+  assert.equal(matchesBooking(saved, data), true);
+  for (const mutation of [{ name: "نام دیگر" }, { city: null }, { service: "vaccination" }, { preferredTime: "18:00" }, { preferredDate: "2026-11-01" }, { phone: "09129999999" }]) {
+    assert.equal(matchesBooking({ ...saved, ...mutation }, data), false);
+  }
+  for (const requestId of ["-".repeat(36), "a".repeat(36)]) assert.ok(validateBooking({ ...valid, requestId }, now).error);
 });
