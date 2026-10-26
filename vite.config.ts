@@ -10,6 +10,13 @@ const SITE_CREATOR_PLACEHOLDER_DATABASE_ID =
   "00000000-0000-4000-8000-000000000000";
 
 const { d1, r2 } = hostingConfig;
+const cloudflareDatabaseId = process.env.CLOUDFLARE_D1_DATABASE_ID?.trim();
+if (cloudflareDatabaseId && (
+  !/^[a-f0-9]{8}(?:-[a-f0-9]{4}){3}-[a-f0-9]{12}$/i.test(cloudflareDatabaseId)
+  || cloudflareDatabaseId === SITE_CREATOR_PLACEHOLDER_DATABASE_ID
+)) {
+  throw new Error("CLOUDFLARE_D1_DATABASE_ID must be the Database ID of your Cloudflare D1 database.");
+}
 
 // macOS Seatbelt blocks FSEvents, so Codex previews need polling for HMR.
 const isCodexSeatbeltSandbox = process.env.CODEX_SANDBOX === "seatbelt";
@@ -22,8 +29,10 @@ const localBindingConfig = {
     ? [
         {
           binding: d1,
-          database_name: "site-creator-d1",
-          database_id: SITE_CREATOR_PLACEHOLDER_DATABASE_ID,
+          database_name: cloudflareDatabaseId
+            ? process.env.CLOUDFLARE_D1_DATABASE_NAME?.trim() || "doctor-resoon-db"
+            : "site-creator-d1",
+          database_id: cloudflareDatabaseId || SITE_CREATOR_PLACEHOLDER_DATABASE_ID,
         },
       ]
     : [],

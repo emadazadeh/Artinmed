@@ -28,6 +28,8 @@ Requests enforce known service IDs, allowed preference dates/times, valid Irania
 
 ## Development
 
+For deployment in the owner's own Cloudflare account, see [the Cloudflare deployment guide](docs/cloudflare-deployment.md). Set `CLOUDFLARE_D1_DATABASE_ID` during the build, then use `pnpm deploy:cloudflare` to apply pending D1 migrations before publishing. Without that setting, the existing Sites build integration retains its managed binding configuration.
+
 Requires Node 22.13+ and pnpm. The project uses Vinext with the maintained Cloudflare Sites integration.
 
 ```sh
