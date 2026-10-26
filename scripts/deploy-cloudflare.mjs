@@ -6,19 +6,28 @@ import { fileURLToPath, pathToFileURL } from "node:url";
 const placeholderId = "00000000-0000-4000-8000-000000000000";
 const uuid = /^[a-f0-9]{8}(?:-[a-f0-9]{4}){3}-[a-f0-9]{12}$/i;
 
-export function prepareCloudflareConfig(config, expectedDatabaseId, configDirectory, migrationsDirectory) {
+export function resolveCloudflareDatabase(standalone, environment) {
+  return {
+    database_id: environment.CLOUDFLARE_D1_DATABASE_ID?.trim() || standalone.database_id,
+    database_name: environment.CLOUDFLARE_D1_DATABASE_NAME?.trim() || standalone.database_name,
+  };
+}
+
+export function prepareCloudflareConfig(config, expectedDatabaseId, configDirectory, migrationsDirectory, databaseName) {
   const expected = expectedDatabaseId?.trim();
   if (!expected || !uuid.test(expected) || expected === placeholderId) {
-    throw new Error("Set CLOUDFLARE_D1_DATABASE_ID to your D1 Database ID, then run the build before deployment.");
+    throw new Error("Configure a valid database_id in cloudflare.database.json or CLOUDFLARE_D1_DATABASE_ID.");
   }
   const database = config.d1_databases?.find(binding => binding.binding === "DB");
-  if (!database || database.database_id?.toLowerCase() !== expected.toLowerCase()) {
+  if (!database || (database.database_id !== placeholderId && database.database_id?.toLowerCase() !== expected.toLowerCase())) {
     throw new Error("The built DB binding does not match CLOUDFLARE_D1_DATABASE_ID. Run the build again with the correct Database ID.");
   }
   return {
     ...config,
     d1_databases: config.d1_databases.map(binding => binding.binding === "DB" ? {
       ...binding,
+      database_id: expected,
+      database_name: databaseName || (binding.database_id === placeholderId ? "doctor-resoon-db" : binding.database_name),
       migrations_dir: path.relative(configDirectory, migrationsDirectory).split(path.sep).join("/"),
     } : binding),
   };
@@ -39,8 +48,13 @@ async function main() {
   let config;
   try { config = JSON.parse(readFileSync(buildConfigPath, "utf8")); }
   catch { throw new Error("Build output was not found. Run pnpm build before deployment."); }
-  const prepared = prepareCloudflareConfig(config, process.env.CLOUDFLARE_D1_DATABASE_ID, path.dirname(deploymentConfigPath), path.join(projectRoot, "drizzle"));
+  let standalone;
+  try { standalone = JSON.parse(readFileSync(path.join(projectRoot, "cloudflare.database.json"), "utf8")); }
+  catch { throw new Error("The standalone database configuration cloudflare.database.json could not be read."); }
+  const target = resolveCloudflareDatabase(standalone, process.env);
+  const prepared = prepareCloudflareConfig(config, target.database_id, path.dirname(deploymentConfigPath), path.join(projectRoot, "drizzle"), target.database_name);
   writeFileSync(deploymentConfigPath, JSON.stringify(prepared, null, 2) + "\n");
+  console.log(`Standalone D1 target: ${prepared.d1_databases.find(binding => binding.binding === "DB").database_name}`);
   if (dryRun) console.log("Dry run: remote migrations are skipped; the Worker is not published.");
   const wrangler = path.join(projectRoot, "node_modules/wrangler/bin/wrangler.js");
   await runCloudflareSteps(args => {

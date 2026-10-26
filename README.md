@@ -28,7 +28,7 @@ Requests enforce known service IDs, allowed preference dates/times, valid Irania
 
 ## Development
 
-For deployment in the owner's own Cloudflare account, see [the Cloudflare deployment guide](docs/cloudflare-deployment.md). Set `CLOUDFLARE_D1_DATABASE_ID` during the build, then use `pnpm deploy:cloudflare` to apply pending D1 migrations before publishing. Without that setting, the existing Sites build integration retains its managed binding configuration.
+For deployment in the owner's own Cloudflare account, see [the Cloudflare deployment guide](docs/cloudflare-deployment.md). `cloudflare.database.json` records the owner-provided database name and public Database ID. `pnpm deploy:cloudflare` uses that target to apply pending D1 migrations before publishing; environment variables can override it. The generated managed placeholder is replaced only in a separate standalone deployment configuration. The existing Sites build configuration retains its managed binding.
 
 Requires Node 22.13+ and pnpm. The project uses Vinext with the maintained Cloudflare Sites integration.
 
