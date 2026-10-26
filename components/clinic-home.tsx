@@ -1,5 +1,6 @@
 import { services, faqs } from "@/lib/clinic-data";
 import { pageSchema, site } from "@/lib/site";
+import { contact, founder } from "@/lib/brand";
 import { Icon, type IconName } from "./icons";
 import { BookingButton } from "./booking-provider";
 import SiteFrame from "./site-frame";
@@ -33,15 +34,15 @@ export default function ClinicHome() {
           <div className="hero-visual">
             <span className="orbit orbit-one" /><span className="orbit orbit-two" />
             <div className="hero-image-frame">
-              <img src="/images/home-care-768.webp" srcSet="/images/home-care-480.webp 480w, /images/home-care-768.webp 768w, /images/home-care.webp 1024w" sizes="(max-width: 640px) 85vw, (max-width: 900px) 42vw, 440px" decoding="async" loading="eager" alt="تصویر مفهومی گفت‌وگوی پزشک با بیمار در محیط خانه" width="1024" height="1280" fetchPriority="high" />
+              <img src={founder.portrait} srcSet="/images/emad-azadeh-480.webp 480w, /images/emad-azadeh-768.webp 768w, /images/emad-azadeh-1024.webp 1024w" sizes="(max-width: 640px) 85vw, (max-width: 900px) 42vw, 440px" decoding="async" loading="eager" alt={`${founder.name}، ${founder.role}؛ پرترهٔ ویرایش‌شده با هوش مصنوعی`} width="1024" height="1280" fetchPriority="high" />
               <span className="image-side-caption" lang="en">MEDICAL CARE, AROUND YOU.</span>
             </div>
             <div className="hero-seal" aria-hidden="true"><Icon name="home" size={27} /><span>پزشک‌محور<br />متناسب با شما</span></div>
             <div className="image-card">
               <span className="image-card-icon"><Icon name="stethoscope" size={25} /></span>
-              <div>پزشک، نقطهٔ شروع مراقبت.<small>ویزیت آنلاین و هماهنگی تیم درمانی</small></div>
+              <div><a href={founder.path}>{founder.name}</a><small>{founder.role}</small></div>
             </div>
-            <span className="concept-caption">تصویر مفهومی؛ پزشک یا بیمار واقعی دکتر رسون نیست.</span>
+            <span className="concept-caption">پرترهٔ دکتر عماد آزاده؛ ویرایش با هوش مصنوعی.</span>
           </div>
         </div>
         <div className="container hero-bottom">
@@ -101,11 +102,12 @@ export default function ClinicHome() {
       <section className="section care-team-section" id="medical-team" aria-labelledby="team-title">
         <div className="container philosophy-grid">
           <div className="philosophy-intro">
-            <span className="eyebrow">A MEDICAL TEAM, BUILT AROUND YOU</span>
+            <span className="eyebrow" lang="en">A MEDICAL TEAM, BUILT AROUND YOU</span>
             <h2 id="team-title">پشت هر اعزام،<br />یک <em>تصمیم پزشکی.</em></h2>
+            <div className="founder-byline"><strong>{founder.name}</strong><span>{founder.role}</span></div>
             <p>دکتر رسون یک تیم پزشکی با مدل ویزیت آنلاین و مراقبت در منزل است. اول نیاز بیمار مشخص می‌شود؛ بعد خدمت و فرد مناسب برای انجام آن انتخاب می‌شوند.</p>
             <p>در مسیر بوتاکس، حضور شخص پزشک بخش اصلی خدمت است؛ معاینه و تزریق را خود پزشک انجام می‌دهد.</p>
-            <BookingButton className="text-link">درخواست ارزیابی پزشک<Icon name="arrow" size={19} /></BookingButton>
+            <a className="text-link" href={founder.path}>آشنایی با مؤسس و رویکرد دکتر رسون<Icon name="arrow" size={19} /></a>
           </div>
           <div className="team-roles">
             <h3>برای هر خدمت، تیم مناسب آن</h3>
@@ -128,7 +130,7 @@ export default function ClinicHome() {
         <div className="container contact-inner">
           <div className="contact-symbol" aria-hidden="true"><Icon name="stethoscope" size={42} /></div>
           <div><span className="eyebrow" lang="en">START WITH YOUR PHYSICIAN</span><h2>مراقبت مناسب،<em> از ویزیت پزشک شروع می‌شود.</em></h2><p>خدمت، شهر و زمان ترجیحی را ثبت کنید تا برای ویزیت آنلاین و بررسی درخواست هماهنگی شود.</p></div>
-          <BookingButton className="button button-green">درخواست ویزیت آنلاین<Icon name="arrow" size={19} /></BookingButton>
+          <div className="contact-actions"><BookingButton className="button button-green">درخواست ویزیت آنلاین<Icon name="arrow" size={19} /></BookingButton><a className="contact-phone" href={contact.href} aria-label={`تماس با دکتر رسون: ${contact.phoneLabel}`}><Icon name="phone" size={18} /><bdi dir="ltr">{contact.phoneLabel}</bdi></a><a className="contact-page-link" href="/contact">راه‌های ارتباط با دکتر رسون</a></div>
         </div>
       </section>
     </main>

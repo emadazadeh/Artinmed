@@ -1,5 +1,6 @@
 import type { ReactNode } from "react";
 import { services } from "@/lib/clinic-data";
+import { contact, founder } from "@/lib/brand";
 import { BookingButton, BookingProvider, TrackingButton } from "./booking-provider";
 import { Brand, Icon } from "./icons";
 import SiteHeader from "./site-header";
@@ -12,9 +13,9 @@ export default function SiteFrame({ children }: { children: ReactNode }) {
     {children}
     <footer className="site-footer">
       <div className="container footer-top">
-        <div className="footer-brand"><Brand light /><p>ویزیت آنلاین پزشک؛ مراقبت متناسب در منزل.</p></div>
-        <nav className="footer-links" aria-label="پیوندهای خدمات">{services.map(service => <a key={service.id} href={`/services/${service.id}`}>{service.name}</a>)}<TrackingButton>پیگیری درخواست</TrackingButton></nav>
-        <div className="footer-note"><Icon name="shield" size={24} /><p>هر خدمت، متناسب با ارزیابی پزشکی.<small>ثبت درخواست به معنی اعزام فوری یا تأیید نهایی نیست.</small></p></div>
+        <div className="footer-brand"><Brand light /><p>ویزیت آنلاین پزشک؛ مراقبت متناسب در منزل.</p><a className="footer-founder" href={founder.path}>{founder.name} · مدیر و مؤسس</a></div>
+        <nav className="footer-links" aria-label="پیوندهای سایت">{services.map(service => <a key={service.id} href={`/services/${service.id}`}>{service.name}</a>)}<a href={founder.path}>دربارهٔ دکتر رسون</a><a href="/contact">تماس با ما</a><TrackingButton>پیگیری درخواست</TrackingButton></nav>
+        <div className="footer-contact"><a className="footer-phone" href={contact.href} aria-label={`تماس با دکتر رسون: ${contact.phoneLabel}`}><Icon name="phone" size={21} /><bdi dir="ltr">{contact.phoneLabel}</bdi></a><span>تماس برای هماهنگی و پرسش دربارهٔ خدمات</span><div className="footer-note"><Icon name="shield" size={22} /><p>هر خدمت، متناسب با ارزیابی پزشکی.<small>ثبت درخواست به معنی اعزام فوری یا تأیید نهایی نیست.</small></p></div></div>
       </div>
       <div className="container care-scope-note">این سامانه برای خدمات غیراورژانسی است. در وضعیت اورژانسی، برای رسیدگی فوری با اورژانس تماس بگیرید.</div>
       <div className="container footer-bottom"><span>© {new Date().getFullYear()} دکتر رسون. تمامی حقوق محفوظ است.</span><a href="/privacy">حریم خصوصی</a><span lang="en">MEDICAL CARE, AROUND YOU</span></div>

@@ -54,11 +54,13 @@ The home page and three service guides render their content on the server. Booki
 - `/services/medical-care`
 - `/services/vaccination`
 - `/services/home-botox`
+- `/about`
+- `/contact`
 - `/privacy`
 
-`lib/site.ts` is the single source for the confirmed public origin. Update it when moving to a custom domain, then rebuild and publish so canonicals, social metadata, JSON-LD and the sitemap all agree. `/robots.txt` allows public pages and excludes API crawling; `/sitemap.xml` lists the five public pages. API responses also carry `noindex` and `no-store` headers. JSON-LD describes only known services and visible FAQ content; it makes no clinician, rating, price or coverage claims. Search engines decide indexing and search enhancements.
+`lib/site.ts` is the single source for the confirmed public origin. Update it when moving to a custom domain, then rebuild and publish so canonicals, social metadata, JSON-LD and the sitemap all agree. `/robots.txt` allows public pages and excludes API crawling; `/sitemap.xml` lists the seven public pages. API responses also carry `noindex` and `no-store` headers. JSON-LD describes known services, visible FAQ content and the owner-supplied founder/contact details; it makes no licensing, specialty, rating, price, hours or coverage claims. Search engines decide indexing and search enhancements.
 
-Responsive WebP images serve smaller versions of the hero photograph. The social sharing card is a static 1200×630 PNG using the existing illustrative image. The local font and medical copy constraints remain in place.
+Responsive WebP images serve smaller versions of the founder portrait. The social sharing card is a static 1200×630 PNG using the same AI-edited portrait. The local font and medical copy constraints remain in place.
 
 ## Source map
 
@@ -68,6 +70,7 @@ Responsive WebP images serve smaller versions of the hero photograph. The social
 - `components/booking-provider.tsx` and `components/site-frame.tsx`: shared booking actions, header and footer.
 - `app/services/[service]/page.tsx` and `lib/service-guides.ts`: service guides, FAQs and metadata.
 - `lib/site.ts`: public origin, metadata and structured data.
+- `lib/brand.ts`: owner-supplied founder identity and public contact details.
 - `lib/booking.ts`: validation, phone normalization and Tehran dates.
 - `lib/request-body.ts`: byte-limited JSON buffering and safe request-body draining.
 - `app/api/appointments/`: persistent request and tracking handlers.
@@ -76,7 +79,11 @@ Responsive WebP images serve smaller versions of the hero photograph. The social
 
 ## Assets and clinical copy
 
-`public/images/home-care.webp` is a generated illustrative image, not an actual physician or patient. Created with the built-in ImageGen tool and optimized for the site. Prompt: “An Iranian physician in emerald scrubs listening to a mature female patient in a calm cream-and-green domestic living room; tablet, natural light, no procedures, no text or logos; vertical editorial healthcare photograph.”
+The owner supplied a photograph and identified its subject as **Dr. Emad Azadeh, director and founder of Doctor Resoon**, and provided the public contact number **09350631134**. `lib/brand.ts` centralizes these facts and the `tel:+989350631134` link. No specialty, license number, credentials, opening hours or service geography were inferred.
+
+`public/images/emad-azadeh-{480,768,1024}.webp` are responsive derivatives of an AI-edited portrait based on the supplied photograph. The edit preserves the person's appearance while changing lighting, clothing and background to match the brand. The homepage and about-page captions identify the AI edit. `public/images/doctor-resoon-founder-social.png` uses this portrait with native brand typography. The original generated PNG is retained outside the repository in the session's generated-image directory.
+
+The retained legacy asset `public/images/home-care.webp` is a generated illustrative image, not an actual physician or patient. It is no longer the homepage hero. Created with the built-in ImageGen tool and optimized for the site. Prompt: “An Iranian physician in emerald scrubs listening to a mature female patient in a calm cream-and-green domestic living room; tablet, natural light, no procedures, no text or logos; vertical editorial healthcare photograph.”
 
 Vazirmatn is self-hosted under the SIL Open Font License in `public/fonts/OFL.txt`. Brand and UI icons are native SVG.
 

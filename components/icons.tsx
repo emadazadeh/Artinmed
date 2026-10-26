@@ -1,6 +1,7 @@
 import type { CSSProperties, ReactNode } from "react";
-export type IconName = "arrow" | "arrow-down" | "menu" | "close" | "sparkle" | "shield" | "calendar" | "leaf" | "check" | "chevron" | "camera" | "upload" | "clock" | "heart" | "face" | "laser" | "drop" | "copy" | "refresh" | "download" | "search" | "lock" | "stethoscope" | "video" | "home" | "syringe";
+export type IconName = "arrow" | "arrow-down" | "menu" | "close" | "sparkle" | "shield" | "calendar" | "leaf" | "check" | "chevron" | "camera" | "upload" | "clock" | "heart" | "face" | "laser" | "drop" | "copy" | "refresh" | "download" | "search" | "lock" | "stethoscope" | "video" | "home" | "syringe" | "phone";
 const paths: Record<IconName, ReactNode> = {
+  phone: <path d="M7 3H4a1 1 0 0 0-1 1c0 9.4 7.6 17 17 17a1 1 0 0 0 1-1v-3l-5-2-2 2a14 14 0 0 1-7-7l2-2-2-5Z" />,
   stethoscope: <><path d="M5 3v5a5 5 0 0 0 10 0V3M3 3h4m6 0h4m-7 10v3a5 5 0 0 0 10 0v-3" /><circle cx="20" cy="10" r="3" /></>,
   video: <><rect x="2" y="5" width="14" height="14" rx="3" /><path d="m16 10 6-4v12l-6-4M7 10h4m-2-2v4" /></>,
   home: <><path d="m3 10 9-7 9 7v11H3V10Z" /><path d="M9 21v-7h6v7M9 9h6m-3-3v6" /></>,

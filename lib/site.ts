@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import { services } from "./clinic-data.ts";
+import { contact, founder } from "./brand.ts";
 
 // Confirmed public origin. Update this single value when moving to a custom domain.
 export const site = {
@@ -7,10 +8,10 @@ export const site = {
   url: "https://doctor-resoon.cometolive34.chatgpt.site",
   title: "دکتر رسون | ویزیت آنلاین پزشک و خدمات پزشکی در منزل",
   description: "درخواست ویزیت آنلاین پزشک و هماهنگی خدمات پزشکی در منزل، واکسیناسیون و بوتاکس با حضور پزشک؛ هر خدمت پس از ارزیابی پزشکی و بررسی محدودهٔ شما.",
-  socialImage: "/images/doctor-resoon-social.png",
+  socialImage: "/images/doctor-resoon-founder-social.png",
 } as const;
 
-export const publicPaths = ["/", ...services.map(service => `/services/${service.id}`), "/privacy"];
+export const publicPaths = ["/", ...services.map(service => `/services/${service.id}`), "/about", "/contact", "/privacy"];
 
 export function pageMetadata(title: string, description: string, path: string): Metadata {
   const url = new URL(path, site.url).href;
@@ -25,7 +26,7 @@ export function pageMetadata(title: string, description: string, path: string): 
       siteName: site.name,
       locale: "fa_IR",
       type: "website",
-      images: [{ url: site.socialImage, width: 1200, height: 630, alt: "دکتر رسون؛ ویزیت آنلاین پزشک و مراقبت در منزل" }],
+      images: [{ url: site.socialImage, width: 1200, height: 630, alt: "دکتر عماد آزاده، مدیر و مؤسس دکتر رسون؛ ویزیت آنلاین و مراقبت در منزل" }],
     },
     twitter: {
       card: "summary_large_image",
@@ -46,11 +47,22 @@ export function pageSchema({ path, title, description, questions = [], serviceId
   const url = new URL(path, site.url).href;
   const organizationId = `${site.url}/#organization`;
   const websiteId = `${site.url}/#website`;
+  const founderId = `${site.url}${founder.path}#founder`;
   const graph: Record<string, unknown>[] = [
-    { "@type": "Organization", "@id": organizationId, name: site.name, alternateName: "Doctor Resoon", url: site.url },
+    { "@type": "Organization", "@id": organizationId, name: site.name, alternateName: "Doctor Resoon", url: site.url, telephone: contact.phone, founder: { "@id": founderId }, contactPoint: { "@type": "ContactPoint", telephone: contact.phone, contactType: "هماهنگی خدمات", availableLanguage: "fa-IR", url: `${site.url}/contact` } },
+    { "@type": "Person", "@id": founderId, name: founder.name, jobTitle: founder.role, url: `${site.url}${founder.path}`, image: new URL(founder.portrait, site.url).href, worksFor: { "@id": organizationId } },
     { "@type": "WebSite", "@id": websiteId, name: site.name, url: site.url, inLanguage: "fa-IR", publisher: { "@id": organizationId } },
     { "@type": "WebPage", "@id": `${url}#webpage`, url, name: title, description, inLanguage: "fa-IR", isPartOf: { "@id": websiteId }, about: { "@id": serviceId ? `${url}#service` : organizationId } },
   ];
+  if (path === founder.path) {
+    const page = graph.find(node => node["@type"] === "WebPage")!;
+    page["@type"] = "AboutPage";
+    page.mainEntity = { "@id": founderId };
+  }
+  if (path === "/contact") {
+    const page = graph.find(node => node["@type"] === "WebPage")!;
+    page["@type"] = "ContactPage";
+  }
   if (serviceId) {
     graph.push({ "@type": "Service", "@id": `${url}#service`, name: title, description, url, provider: { "@id": organizationId }, serviceType: services.find(service => service.id === serviceId)?.name });
     graph.push({ "@type": "BreadcrumbList", itemListElement: [
