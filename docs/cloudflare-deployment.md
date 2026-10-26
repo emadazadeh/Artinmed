@@ -26,9 +26,17 @@
 | Deploy command | `pnpm run deploy:cloudflare` |
 | Preview command | `pnpm exec wrangler preview --config dist/server/wrangler.json` |
 | Root directory | خالی؛ ریشهٔ مخزن |
-| Production branch | `improve/seo-and-patient-experience` تا زمانی که تغییرات در `main` ادغام شوند |
+| Production branch | `main` |
 
 فرمان Deploy ابتدا تطبیق شناسهٔ D1 با خروجی Build را بررسی می‌کند، مهاجرت‌های اجرا‌نشدهٔ پوشهٔ `drizzle` را با Wrangler اعمال می‌کند و پس از موفقیت، Worker و فایل‌های عمومی را منتشر می‌کند. جدول `d1_migrations` مانع اجرای دوبارهٔ مهاجرت‌های قبلی می‌شود. خطای مهاجرت، مرحلهٔ انتشار را متوقف می‌کند.
+
+## رفع خطای تنظیمات Build
+
+اگر لاگ `Executing user build command: pnpm run deploy:cloudflare` را نشان می‌دهد، فرمان انتشار به‌جای فرمان ساخت اجرا شده است. فیلد **Build command** باید `pnpm run build` و فیلد **Deploy command** باید `pnpm run deploy:cloudflare` باشد.
+
+خطای `Missing script: deploy:cloudflare` یعنی commit انتخاب‌شده، اسکریپت انتشار جدید را ندارد. شاخهٔ production را روی `main` قرار دهید و یک Build جدید از آخرین commit شروع کنید.
+
+پس از ذخیرهٔ تنظیمات جدید، یک Build از آخرین commit شاخهٔ `main` شروع کنید. طبق [راهنمای تنظیمات Workers Builds](https://developers.cloudflare.com/workers/ci-cd/builds/configuration/#build-settings)، Retry تنظیمات موجود در زمان تلاش مجدد را به کار می‌برد. برای رفع `Missing script` نیز باید کد انتخاب‌شده شامل اسکریپت جدید انتشار باشد.
 
 برای بررسی محلیِ بستهٔ انتشار بدون تغییر دیتابیس ابری یا انتشار Worker:
 
