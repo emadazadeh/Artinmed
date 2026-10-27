@@ -20,7 +20,7 @@ export function appointmentWhatsAppMessage(booking: WhatsAppBooking) {
     `ساعت ترجیحی: ${faNumber(booking.time)} (به وقت تهران)`,
     `کد پیگیری: ${booking.reference}`,
     "",
-    "درخواست من در انتظار بررسی است؛ زمان و خدمت پس از ارزیابی پزشک و هماهنگی تأیید می‌شود.",
+    "درخواست من در انتظار بررسی است؛ زمان و شرایط برنامه یا خدمت پس از بررسی و هماهنگی تأیید می‌شود.",
   ].join("\n");
 }
 

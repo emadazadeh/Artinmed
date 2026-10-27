@@ -6,9 +6,9 @@ import { contact, founder } from "./brand.ts";
 export const site = {
   name: "دکتر رسون",
   url: "https://doctor-resoon.cometolive34.chatgpt.site",
-  title: "دکتر رسون | ویزیت آنلاین پزشک و خدمات پزشکی در منزل",
-  description: "درخواست ویزیت آنلاین پزشک و هماهنگی خدمات پزشکی در منزل، واکسیناسیون و بوتاکس با حضور پزشک؛ هر خدمت پس از ارزیابی پزشکی و بررسی محدودهٔ شما.",
-  socialImage: "/images/doctor-resoon-founder-social.png",
+  title: "دکتر رسون | تغذیه و ورزش، ویزیت آنلاین و مراقبت در منزل",
+  description: "برنامهٔ تغذیه و ورزش متناسب با شما، ویزیت آنلاین پزشک، تراپی و اعزام تیم درمانی به منزل، واکسیناسیون و مراقبت‌های پیشگیرانه؛ انتخاب مسیر و ثبت درخواست در دکتر رسون.",
+  socialImage: "/images/doctor-resoon-care-social.webp",
 } as const;
 
 export const publicPaths = ["/", ...services.map(service => `/services/${service.id}`), "/about", "/contact", "/privacy"];

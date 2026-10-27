@@ -4,7 +4,7 @@ import { useEffect, useRef, useState } from "react";
 import { Brand, Icon } from "./icons";
 import { BookingButton, TrackingButton } from "./booking-provider";
 
-const links = [["/#services", "خدمات در منزل"], ["/#workflow", "مسیر دریافت خدمت"], ["/about", "دربارهٔ دکتر رسون"], ["/contact", "تماس با ما"]] as const;
+const links = [["/#services", "مسیرهای مراقبت"], ["/#workflow", "مسیر دریافت خدمت"], ["/about", "دربارهٔ دکتر رسون"], ["/contact", "تماس با ما"]] as const;
 
 export default function SiteHeader() {
   const [menu, setMenu] = useState(false);
@@ -24,7 +24,7 @@ export default function SiteHeader() {
       <nav className="desktop-nav" aria-label="منوی اصلی">{links.map(([href, label]) => <a href={href} key={href}>{label}</a>)}</nav>
       <div className="nav-actions">
         <TrackingButton className="nav-tracking"><Icon name="search" size={17} /><span>پیگیری درخواست</span></TrackingButton>
-        <BookingButton className="button button-green button-small" label="درخواست ویزیت آنلاین"><Icon name="video" size={18} /><span>درخواست ویزیت آنلاین</span></BookingButton>
+        <BookingButton className="button button-green button-small" label="ثبت درخواست"><Icon name="calendar" size={18} /><span>ثبت درخواست</span></BookingButton>
         <button ref={menuButton} type="button" className="menu-button icon-button" aria-label={menu ? "بستن منو" : "باز کردن منو"} aria-expanded={menu} aria-controls="mobile-nav" onClick={() => setMenu(value => !value)}><Icon name={menu ? "close" : "menu"} /></button>
       </div>
     </div>

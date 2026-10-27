@@ -18,10 +18,15 @@ test("invalid service, date, time, consent and malformed payloads are rejected",
   for (const mutation of [{ service: "unknown" }, { service: "filler" }, { date: "2026-10-23" }, { date: "2026-12-30" }, { time: "03:00" }, { consent: false }, { phone: "123" }, { city: "" }, { city: "<script>" }, { name: "<script>" }, { website: "spam.example" }, { requestId: "" }]) assert.ok(validateBooking({ ...valid, ...mutation }, now).error, JSON.stringify(mutation));
   for (const input of [null, [], "payload", 1]) assert.ok(validateBooking(input, now).error);
 });
-test("all three home care paths accept a request for physician assessment", () => {
-  for (const service of ["medical-care", "vaccination", "home-botox"]) {
+test("all four active service lines accept a coordination request", () => {
+  for (const service of ["nutrition-fitness", "online-consultation", "medical-care", "vaccination"]) {
     const result = validateBooking({ ...valid, service }, now);
     assert.equal(result.error, undefined); assert.equal(result.data?.service, service); assert.equal(result.data?.city, "شهر آزمایشی");
+  }
+});
+test("upcoming laboratory and aesthetics services cannot create a booking", () => {
+  for (const service of ["laboratory", "aesthetic-expansion", "home-botox", "mesotherapy", "prp"]) {
+    assert.ok(validateBooking({ ...valid, service }, now).error);
   }
 });
 test("older requests retain their original service names for tracking", () => {

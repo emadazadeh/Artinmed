@@ -1,38 +1,21 @@
-# Doctor Resoon — دکتر رسون
+# دکتر رسون / Doctor Resoon
 
-مرجع اطلاعات کسب‌وکار: [doctor-resoon-brief.md](docs/doctor-resoon-brief.md)
+مرجع خدمات فعلی: [شرح کسب‌وکار](docs/doctor-resoon-brief.md). تحقیق، جهت طراحی و شواهد بررسی: [بازطراحی ۲۷ اکتبر](docs/redesign-2026-10-27.md).
 
-دکتر رسون: ابتدا ویزیت آنلاین پزشک، سپس تعیین خدمت و هماهنگی تیم درمانی متناسب با نیاز بیمار.
+## Active service lines
 
-## Current service lines
+1. Personalized nutrition and exercise programs (`nutrition-fitness`).
+2. Online physician consultation (`online-consultation`).
+3. Home therapy and coordinated medical team visits (`medical-care`).
+4. Vaccination and preventive care (`vaccination`).
 
-1. **Medical care at home:** online physician assessment; injections, IV therapy and other indicated home care are coordinated based on the physician's assessment.
-2. **Vaccination:** requests for HPV or other needed vaccines, subject to individual assessment, availability, storage/transport requirements and suitability for home delivery of care.
-3. **Botox at home:** initial assessment followed, when appropriate, by an in-person physician visit; the physician personally examines the patient and administers the injection.
+Blood tests/home sample collection and home aesthetics (mesotherapy, Botox, PRP) are **coming soon** and cannot create bookings. Existing Botox records still track by reference and phone; its former service URL redirects to the upcoming section.
 
-The website presents Doctor Resoon as a medical team with a physician-led model. It contains no invented clinician biographies, license numbers, ratings, clinic address, region of coverage, prices, vaccine inventory or around-the-clock availability claims.
-
-## Request flow
-
-Visitors choose a service line, a preferred date/time for online physician contact, and provide name, mobile number and city. They receive a persistent request reference and can track it using the reference plus the matching mobile number.
-
-After a successful save, visitors can preview and open a prepared WhatsApp message to the owner's contact number. It includes the saved request's name, normalized mobile number, service, city, preferred date/time in Tehran and reference. The visitor sends it from their own WhatsApp account by pressing Send in WhatsApp. This optional action uses a click-to-chat link; it does not send automatically, create another booking, or mark a request as confirmed. Copying the prepared text is also supported. No WhatsApp API credentials or database migration are required.
-
-A submission is an **assessment request**, not a confirmed consultation, a prescription or an automatic team dispatch. The method and final time of the online consultation, coverage and downstream care are coordinated by the team. Live video consultation, prescribing, staff dispatch, notifications and a staff dashboard are not implemented or represented as automated capabilities.
-
-Only basic coordination information is collected by the form. It does not request diagnoses, medical records, photos or a street address. The prior beauty mirror and generic aesthetics service offering have been removed from the product.
-
-## Data and migration
-
-Cloudflare D1 stores requests in `appointments`. Migration `0001_useful_warhawk.sql` adds a nullable `city` column without altering or deleting earlier records. New requests require city information. Existing references and former service names remain readable through tracking; old service IDs cannot create new requests.
-
-Requests enforce known service IDs, allowed preference dates/times, valid Iranian mobile numbers (including Persian/Arabic digits), consent, a honeypot, a request idempotency key and a limit of three requests per mobile number in 24 hours. Tracking never returns a person's name, mobile number or city.
+The site collects name, mobile number, city, service and preferred contact time. D1 persists requests and returns a reference. Visitors can preview and open a prepared message to the owner's WhatsApp and press Send themselves. Submission is a coordination request, not a confirmed appointment, automatic program, video call, prescription or dispatch. No clinician credentials, coverage, prices, hours, inventory or guaranteed results are invented.
 
 ## Development
 
-For deployment in the owner's own Cloudflare account, see [the Cloudflare deployment guide](docs/cloudflare-deployment.md). `cloudflare.database.json` records the owner-provided database name and public Database ID. `pnpm deploy:cloudflare` uses that target to apply pending D1 migrations before publishing; environment variables can override it. The generated managed placeholder is replaced only in a separate standalone deployment configuration. The existing Sites build configuration retains its managed binding.
-
-Requires Node 22.13+ and pnpm. The project uses Vinext with the maintained Cloudflare Sites integration.
+Node 22.13+ and pnpm 11.25.0. Vinext, React, Cloudflare Workers, D1 and Drizzle.
 
 ```sh
 pnpm install --frozen-lockfile
@@ -41,64 +24,25 @@ pnpm test
 pnpm build
 ```
 
-For a fresh local D1 database, apply each committed SQL migration in order, once:
+Apply committed SQL migrations once to a fresh local D1 before testing forms; preserve existing databases. No schema change is needed for the new service lines. Booking validates active IDs, future preference dates, phone normalization, consent, honeypot, idempotency and per-phone quota. Tracking returns no name, phone or city.
 
-```sh
-node --import ./scripts/sites-env.mjs ./node_modules/wrangler/bin/wrangler.js d1 execute DB --local --config dist/server/wrangler.json --persist-to .wrangler/state --file drizzle/0000_same_rattler.sql
-node --import ./scripts/sites-env.mjs ./node_modules/wrangler/bin/wrangler.js d1 execute DB --local --config dist/server/wrangler.json --persist-to .wrangler/state --file drizzle/0001_useful_warhawk.sql
-pnpm dev
-```
+## Hosting and SEO
 
-For an existing local database, apply only pending migrations. Sites applies pending hosted migrations when publishing. Keep `.openai/hosting.json` and the existing Site identity. The existing Site is public at https://doctor-resoon.cometolive34.chatgpt.site; its audience was confirmed through Sites before enabling indexing. Preserve its audience when publishing.
+The existing public Site is https://doctor-resoon.cometolive34.chatgpt.site. Preserve `.openai/hosting.json`, its project ID, DB binding and audience. The owner's separate Cloudflare deployment has its own database; data is not transferred automatically. See [Cloudflare deployment](docs/cloudflare-deployment.md).
 
-## SEO and page structure
-
-The home page and three service guides render their content on the server. Booking and tracking remain lazy-loaded interactive components, with intent-based preloading on focus or hover. Service cards and footer links lead to crawlable pages:
-
-- `/services/medical-care`
-- `/services/vaccination`
-- `/services/home-botox`
-- `/about`
-- `/contact`
-- `/privacy`
-
-`lib/site.ts` is the single source for the confirmed public origin. Update it when moving to a custom domain, then rebuild and publish so canonicals, social metadata, JSON-LD and the sitemap all agree. `/robots.txt` allows public pages and excludes API crawling; `/sitemap.xml` lists the seven public pages. API responses also carry `noindex` and `no-store` headers. JSON-LD describes known services, visible FAQ content and the owner-supplied founder/contact details; it makes no licensing, specialty, rating, price, hours or coverage claims. Search engines decide indexing and search enhancements.
-
-Responsive WebP images serve smaller versions of the founder portrait. The social sharing card is a static 1200×630 PNG using the same AI-edited portrait. The local font and medical copy constraints remain in place.
-
-The liquid glass theme uses translucent mint and emerald surfaces, static highlights and a floating navigation bar. Home and about pages place the founder portrait between the heading and descriptive copy on mobile, and align it near the top of the desktop layout. Glass surfaces have opaque fallbacks and respect reduced transparency and motion preferences; booking and WhatsApp behavior are unchanged.
+`lib/site.ts` is the origin and metadata source. The sitemap derives all active service routes. Public content renders on the server; booking loads on interaction. The liquid glass theme has opaque fallbacks and respects reduced motion/transparency. Images have responsive WebP variants and versioned filenames. The founder portrait is AI-edited from the owner's photographs; visible captions disclose the edit.
 
 ## Source map
 
-- `components/clinic-home.tsx`: physician-led landing page and three service lines.
-- `lib/clinic-data.ts`: service descriptions, FAQ and legacy tracking names.
-- `components/booking-dialog.tsx`: assessment request and tracking UI.
-- `components/booking-provider.tsx` and `components/site-frame.tsx`: shared booking actions, header and footer.
-- `app/services/[service]/page.tsx` and `lib/service-guides.ts`: service guides, FAQs and metadata.
-- `lib/site.ts`: public origin, metadata and structured data.
-- `lib/brand.ts`: owner-supplied founder identity and public contact details.
-- `lib/upcoming-services.ts`: non-bookable roadmap items from the owner's handwritten plan; these stay outside booking validation and service structured data.
-- `lib/booking.ts`: validation, phone normalization and Tehran dates.
-- `lib/whatsapp.ts`: prepared request message and WhatsApp destination derived from the owner-supplied contact number.
-- `lib/request-body.ts`: byte-limited JSON buffering and safe request-body draining.
-- `app/api/appointments/`: persistent request and tracking handlers.
-- `db/schema.ts` and `drizzle/`: data model and append-only migrations.
-- `app/globals.css` and `app/site-pages.css`: responsive Persian layout, cream/emerald/gold identity.
-- `app/liquid-glass.css`: active glass theme, early portrait layout and accessibility fallbacks.
+- `lib/clinic-data.ts`: active services, names and FAQ; legacy names for tracking.
+- `lib/upcoming-services.ts`: non-bookable upcoming lines.
+- `lib/service-guides.ts`: service pages and FAQ metadata.
+- `components/clinic-home.tsx`: homepage and direct service selection.
+- `components/booking-dialog.tsx`: booking, tracking and WhatsApp success state.
+- `lib/whatsapp.ts`: encoded message and destination from owner-supplied contact.
+- `lib/brand.ts`: confirmed founder/contact information and portrait source set.
+- `lib/site.ts`: canonical URLs, sitemap paths and JSON-LD.
+- `app/liquid-glass.css`: glass controls, premium home layout and accessibility fallbacks.
+- `db/`, `drizzle/`, `app/api/appointments/`: persistent requests and data access.
 
-## Assets and clinical copy
-
-The owner supplied a photograph and identified its subject as **Dr. Emad Azadeh, director and founder of Doctor Resoon**, and provided the public contact number **09350631134**. `lib/brand.ts` centralizes these facts and the `tel:+989350631134` link. No specialty, license number, credentials, opening hours or service geography were inferred.
-
-`public/images/emad-azadeh-{480,768,1024}.webp` are responsive derivatives of an AI-edited portrait based on the supplied photograph. The edit preserves the person's appearance while changing lighting, clothing and background to match the brand. The homepage and about-page captions identify the AI edit. `public/images/doctor-resoon-founder-social.png` uses this portrait with native brand typography. The original generated PNG is retained outside the repository in the session's generated-image directory.
-
-The retained legacy asset `public/images/home-care.webp` is a generated illustrative image, not an actual physician or patient. It is no longer the homepage hero. Created with the built-in ImageGen tool and optimized for the site. Prompt: “An Iranian physician in emerald scrubs listening to a mature female patient in a calm cream-and-green domestic living room; tablet, natural light, no procedures, no text or logos; vertical editorial healthcare photograph.”
-
-Vazirmatn is self-hosted under the SIL Open Font License in `public/fonts/OFL.txt`. Brand and UI icons are native SVG.
-
-The site gives no individualized treatment, dosing or vaccine schedule advice. Clinical copy keeps vaccine selection and suitability conditional on assessment and includes transport/storage checks. Reference sources:
-
-- WHO, HPV vaccine delivery guidance: https://iris.who.int/items/f927e154-96e7-4151-8853-c0b18c5a40c6
-- FDA, botulinum toxin products and qualified healthcare providers: https://www.fda.gov/news-events/press-announcements/fda-warns-companies-over-illegal-marketing-botox-and-related-products
-
-No GitHub token or application secret is stored in the project.
+No token or application secret is stored in the source or deployment archive.
