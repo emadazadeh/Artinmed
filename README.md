@@ -16,6 +16,8 @@ The website presents Doctor Resoon as a medical team with a physician-led model.
 
 Visitors choose a service line, a preferred date/time for online physician contact, and provide name, mobile number and city. They receive a persistent request reference and can track it using the reference plus the matching mobile number.
 
+After a successful save, visitors can preview and open a prepared WhatsApp message to the owner's contact number. It includes the saved request's name, normalized mobile number, service, city, preferred date/time in Tehran and reference. The visitor sends it from their own WhatsApp account by pressing Send in WhatsApp. This optional action uses a click-to-chat link; it does not send automatically, create another booking, or mark a request as confirmed. Copying the prepared text is also supported. No WhatsApp API credentials or database migration are required.
+
 A submission is an **assessment request**, not a confirmed consultation, a prescription or an automatic team dispatch. The method and final time of the online consultation, coverage and downstream care are coordinated by the team. Live video consultation, prescribing, staff dispatch, notifications and a staff dashboard are not implemented or represented as automated capabilities.
 
 Only basic coordination information is collected by the form. It does not request diagnoses, medical records, photos or a street address. The prior beauty mirror and generic aesthetics service offering have been removed from the product.
@@ -75,6 +77,7 @@ Responsive WebP images serve smaller versions of the founder portrait. The socia
 - `lib/brand.ts`: owner-supplied founder identity and public contact details.
 - `lib/upcoming-services.ts`: non-bookable roadmap items from the owner's handwritten plan; these stay outside booking validation and service structured data.
 - `lib/booking.ts`: validation, phone normalization and Tehran dates.
+- `lib/whatsapp.ts`: prepared request message and WhatsApp destination derived from the owner-supplied contact number.
 - `lib/request-body.ts`: byte-limited JSON buffering and safe request-body draining.
 - `app/api/appointments/`: persistent request and tracking handlers.
 - `db/schema.ts` and `drizzle/`: data model and append-only migrations.

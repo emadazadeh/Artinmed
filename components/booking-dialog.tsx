@@ -1,7 +1,9 @@
 "use client";
 import { useEffect, useRef, useState, type FormEvent } from "react";
 import { services, timeSlots, faNumber, dateLabel, serviceName } from "@/lib/clinic-data";
-import { availableDates, normalizePhone, createRequestId } from "@/lib/booking";
+import { availableDates, validateBooking, createRequestId } from "@/lib/booking";
+import { contact } from "@/lib/brand";
+import { appointmentWhatsAppMessage, appointmentWhatsAppUrl, type WhatsAppBooking } from "@/lib/whatsapp";
 import Modal from "./modal";
 import { Icon, type IconName } from "./icons";
 type Tracked = { reference: string; service: string; date: string; time: string; status: string };
@@ -20,36 +22,48 @@ export default function BookingDialog({ initialService, trackingOnly, onClose }:
   const [requestId] = useState(createRequestId);
   const [pending, setPending] = useState(false);
   const [error, setError] = useState("");
-  const [reference, setReference] = useState("");
+  const [savedBooking, setSavedBooking] = useState<WhatsAppBooking | null>(null);
   const [trackCode, setTrackCode] = useState("");
   const [record, setRecord] = useState<Tracked | null>(null);
   const [copied, setCopied] = useState(false);
+  const [messageCopied, setMessageCopied] = useState(false);
+  const reference = savedBooking?.reference ?? "";
   const stage = useRef<HTMLDivElement>(null);
   const errorMessage = useRef<HTMLParagraphElement>(null);
-  useEffect(() => { stage.current?.focus(); }, [step, mode]);
+  useEffect(() => { stage.current?.focus(); }, [step, mode, reference]);
   useEffect(() => { if (error) errorMessage.current?.focus(); }, [error]);
   const selected = services.find(s => s.id === service) || services[0];
   async function submit(event: FormEvent) {
     event.preventDefault(); if (pending) return;
     setError("");
-    if (mode === "book" && !/^09\d{9}$/.test(normalizePhone(phone))) { setError("شمارهٔ همراه را بررسی کنید؛ شماره باید ۱۱ رقم و با ۰۹ شروع شود."); return; }
+    const booking = mode === "book" ? validateBooking({ service, date, time, name, phone, city, consent, website, requestId }) : null;
+    if (booking?.error) { setError(booking.error); return; }
+    const submitted = booking?.data;
     setPending(true);
     try {
       const response = await fetch(mode === "track" ? "/api/appointments/track" : "/api/appointments", {
         method: "POST", headers: { "Content-Type": "application/json" }, signal: AbortSignal.timeout(15000),
-        body: JSON.stringify(mode === "track" ? { reference: trackCode, phone } : { service, date, time, name, phone, city, consent, website, requestId }),
+        body: JSON.stringify(submitted ?? { reference: trackCode, phone }),
       });
       const result = await response.json() as Tracked & { error?: string };
       if (!response.ok) throw new Error(result.error || "درخواست انجام نشد؛ دوباره تلاش کنید.");
       if (typeof result.reference !== "string") throw new Error("پاسخ سرور کامل نبود؛ دوباره تلاش کنید.");
-      if (mode === "track") setRecord(result); else setReference(result.reference);
+      if (mode === "track") setRecord(result); else if (submitted) setSavedBooking({ ...submitted, reference: result.reference });
     } catch (e) { setError(e instanceof Error && e.name !== "TimeoutError" && e.name !== "TypeError" ? e.message : "ارتباط با سرور برقرار نشد. اطلاعات فرم حفظ شده؛ دوباره تلاش کنید."); }
     finally { setPending(false); }
   }
   async function copyCode() { try { await navigator.clipboard.writeText(reference); setCopied(true); } catch { setCopied(false); } }
+  async function copyMessage() {
+    if (!savedBooking) return;
+    setError("");
+    try { await navigator.clipboard.writeText(appointmentWhatsAppMessage(savedBooking)); setMessageCopied(true); }
+    catch { setMessageCopied(false); setError("کپی خودکار انجام نشد؛ متن پیام آماده را باز کنید و آن را انتخاب و کپی کنید."); }
+  }
   const switchMode = () => { setMode(v => v === "track" ? "book" : "track"); setError(""); setRecord(null); };
   return <Modal title={mode === "track" ? "پیگیری درخواست" : "درخواست ویزیت آنلاین پزشک"} onClose={onClose}>
-    {reference ? <div className="booking-success"><span className="success-icon"><Icon name="check" size={34} /></span><h3>درخواست شما ثبت شد.</h3><p>کد پیگیری را نگه دارید. زمان و روش ویزیت آنلاین هنگام هماهنگی تأیید می‌شود. نوع خدمت و اعزام تیم درمانی، پس از ارزیابی پزشک مشخص خواهند شد.</p><div className="reference-code"><code dir="ltr">{reference}</code><button className="icon-button" onClick={copyCode} aria-label="کپی کد پیگیری"><Icon name={copied ? "check" : "copy"} size={19} /></button></div><span className="copy-status" aria-live="polite">{copied ? "کد کپی شد." : "برای کپی کد، روی آیکون بزنید."}</span><div className="booking-summary"><span>{selected.name}</span><span>شهر / محدوده: {city}</span><span>{dateLabel(date, true)} · {faNumber(time)}</span><span className="status-pill"><span />در انتظار بررسی</span></div><button className="button button-green full-width" onClick={onClose}>بستن و بازگشت به سایت</button></div> : <>
+    {savedBooking ? <div className="booking-success" ref={stage} tabIndex={-1}><span className="success-icon"><Icon name="check" size={34} /></span><h3>درخواست شما ثبت شد.</h3><p>کد پیگیری را نگه دارید. زمان و روش ویزیت آنلاین هنگام هماهنگی تأیید می‌شود. نوع خدمت و اعزام تیم درمانی، پس از ارزیابی پزشک مشخص خواهند شد.</p><div className="reference-code"><code dir="ltr">{reference}</code><button className="icon-button" onClick={copyCode} aria-label="کپی کد پیگیری"><Icon name={copied ? "check" : "copy"} size={19} /></button></div><span className="copy-status" aria-live="polite">{copied ? "کد کپی شد." : "برای کپی کد، روی آیکون بزنید."}</span><div className="booking-summary"><span>{serviceName(savedBooking.service)}</span><span>شهر / محدوده: {savedBooking.city}</span><span>{dateLabel(savedBooking.date, true)} · {faNumber(savedBooking.time)}</span><span className="status-pill"><span />در انتظار بررسی</span></div>
+      <section className="booking-whatsapp" aria-labelledby="booking-whatsapp-title"><h4 id="booking-whatsapp-title">هماهنگی از طریق واتساپ</h4><p>پیام آماده شامل نام، شمارهٔ تماس، خدمت، شهر، زمان ترجیحی و کد پیگیری شماست. با دکمهٔ زیر، گفت‌وگو با شمارهٔ <bdi dir="ltr">{contact.phoneLabel}</bdi> باز می‌شود؛ پیام را از واتساپ خودتان ارسال کنید.</p><details><summary>مشاهدهٔ متن پیام آماده</summary><p className="whatsapp-message" dir="rtl">{appointmentWhatsAppMessage(savedBooking)}</p></details><a className="button button-green full-width" href={appointmentWhatsAppUrl(savedBooking)} target="_blank" rel="noopener noreferrer" referrerPolicy="no-referrer">باز کردن واتساپ و ارسال درخواست<Icon name="arrow" size={18} /></a><p className="whatsapp-send-note">برای فرستادن پیام، در واتساپ دکمهٔ ارسال را بزنید. درخواست شما در سایت ذخیره شده است.</p><button type="button" className="text-link" onClick={copyMessage}><Icon name={messageCopied ? "check" : "copy"} size={16} />{messageCopied ? "متن پیام کپی شد" : "کپی متن پیام"}</button><span className="copy-status" aria-live="polite">{messageCopied ? "می‌توانید متن را در واتساپ جای‌گذاری کنید." : ""}</span>{error && <p ref={errorMessage} tabIndex={-1} className="form-error" role="alert">{error}</p>}</section>
+      <button className="button button-outline full-width" onClick={onClose}>بستن و بازگشت به سایت</button></div> : <>
       <div className="booking-tabs" role="group" aria-label="ثبت یا پیگیری درخواست"><button type="button" disabled={pending} aria-pressed={mode === "book"} className={mode === "book" ? "selected" : ""} onClick={() => { if (mode !== "book") switchMode(); }}>درخواست جدید</button><button type="button" disabled={pending} aria-pressed={mode === "track"} className={mode === "track" ? "selected" : ""} onClick={() => { if (mode !== "track") switchMode(); }}>پیگیری درخواست</button></div>
       {mode === "track" ? <form onSubmit={submit} className="booking-form" aria-busy={pending}><p className="form-intro">کد پیگیری و همان شمارهٔ همراهی که ثبت کرده‌اید را وارد کنید.</p><label htmlFor="track-code">کد پیگیری<input disabled={pending} id="track-code" required value={trackCode} onChange={e => { setTrackCode(e.target.value.toUpperCase()); setRecord(null); }} placeholder="DRR-XXXXXXXXXX" dir="ltr" autoCapitalize="characters" maxLength={14} /></label><label htmlFor="track-phone">شمارهٔ همراه<input disabled={pending} id="track-phone" type="tel" required inputMode="tel" autoComplete="tel" value={phone} onChange={e => { setPhone(e.target.value); setRecord(null); }} placeholder="۰۹۱۲۱۲۳۴۵۶۷" dir="ltr" maxLength={20} /></label>{error && <p ref={errorMessage} tabIndex={-1} className="form-error" role="alert">{error}</p>}<button type="submit" className="button button-green full-width" disabled={pending}>{pending ? "در حال بررسی…" : "بررسی وضعیت درخواست"}<Icon name="search" size={18} /></button>{record && <div className="tracked-result" role="status"><span className="status-pill">{record.status === "confirmed" ? "تأیید شده" : record.status === "cancelled" ? "لغو شده" : "در انتظار بررسی و هماهنگی"}</span><h3>{serviceName(record.service)}</h3><p>{dateLabel(record.date, true)} · ساعت {faNumber(record.time)}</p><code dir="ltr">{record.reference}</code><small>آخرین وضعیت ثبت‌شدهٔ درخواست شما</small></div>}</form> : <>
         <ol className="booking-steps" aria-label="مراحل درخواست">{["انتخاب خدمت", "زمان ترجیحی", "اطلاعات شما"].map((label, index) => <li key={label} className={step >= index ? "current" : ""} aria-current={step === index ? "step" : undefined}><span>{step > index ? <Icon name="check" size={14} /> : faNumber(index + 1)}</span>{label}</li>)}</ol>
