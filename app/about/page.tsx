@@ -6,7 +6,7 @@ import { contact, founder } from "@/lib/brand";
 import { services } from "@/lib/clinic-data";
 import { pageMetadata, pageSchema } from "@/lib/site";
 
-const title = "دکتر عماد آزاده، مدیر و مؤسس دکتر رسون";
+const title = "دکتر عماد آزاده | مدیر و مؤسس دکتر رسون";
 const description = "با دکتر عماد آزاده، مدیر و مؤسس دکتر رسون، و مسیرهای تغذیه و ورزش، ویزیت آنلاین و مراقبت در منزل آشنا شوید.";
 export const metadata = pageMetadata(title, description, founder.path);
 

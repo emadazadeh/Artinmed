@@ -14,7 +14,7 @@ export default function SiteFrame({ children }: { children: ReactNode }) {
     <footer className="site-footer">
       <div className="container footer-top">
         <div className="footer-brand"><Brand light /><p>مراقبت حرفه‌ای، متناسب با شما.</p><a className="footer-founder" href={founder.path}>{founder.name} · مدیر و مؤسس</a></div>
-        <nav className="footer-links" aria-label="پیوندهای سایت">{services.map(service => <a key={service.id} href={`/services/${service.id}`}>{service.name}</a>)}<a href={founder.path}>دربارهٔ دکتر رسون</a><a href="/contact">تماس با ما</a><TrackingButton>پیگیری درخواست</TrackingButton></nav>
+        <nav className="footer-links" aria-label="پیوندهای سایت"><a href="/services">همهٔ خدمات دکتر رسون</a>{services.map(service => <a key={service.id} href={`/services/${service.id}`}>{service.name}</a>)}<a href={founder.path}>دربارهٔ دکتر رسون</a><a href="/contact">تماس با ما</a><TrackingButton>پیگیری درخواست</TrackingButton></nav>
         <div className="footer-contact"><a className="footer-phone" href={contact.href} aria-label={`تماس با دکتر رسون: ${contact.phoneLabel}`}><Icon name="phone" size={21} /><bdi dir="ltr">{contact.phoneLabel}</bdi></a><span>تماس برای هماهنگی و پرسش دربارهٔ خدمات</span><div className="footer-note"><Icon name="shield" size={22} /><p>هر مسیر، متناسب با نیاز شما.<small>ثبت درخواست به معنی اعزام فوری یا تأیید نهایی نیست.</small></p></div></div>
       </div>
       <div className="container care-scope-note">این سامانه برای خدمات غیراورژانسی است. در وضعیت اورژانسی، برای رسیدگی فوری با اورژانس تماس بگیرید.</div>

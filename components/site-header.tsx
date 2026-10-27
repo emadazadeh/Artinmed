@@ -4,7 +4,7 @@ import { useEffect, useRef, useState } from "react";
 import { Brand, Icon } from "./icons";
 import { BookingButton, TrackingButton } from "./booking-provider";
 
-const links = [["/#services", "مسیرهای مراقبت"], ["/#workflow", "مسیر دریافت خدمت"], ["/about", "دربارهٔ دکتر رسون"], ["/contact", "تماس با ما"]] as const;
+const links = [["/services", "خدمات دکتر رسون"], ["/#workflow", "مسیر دریافت خدمت"], ["/about", "دربارهٔ دکتر رسون"], ["/contact", "تماس با ما"]] as const;
 
 export default function SiteHeader() {
   const [menu, setMenu] = useState(false);

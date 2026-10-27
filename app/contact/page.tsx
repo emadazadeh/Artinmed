@@ -5,7 +5,7 @@ import StructuredData from "@/components/structured-data";
 import { contact } from "@/lib/brand";
 import { pageMetadata, pageSchema } from "@/lib/site";
 
-const title = "تماس با دکتر رسون";
+const title = "تماس و هماهنگی خدمات دکتر رسون";
 const description = `تماس با دکتر رسون با شمارهٔ ${contact.phoneLabel} برای پرسش دربارهٔ خدمات و هماهنگی؛ یا ثبت و پیگیری برنامهٔ تغذیه و ورزش، ویزیت پزشک و خدمات منزل.`;
 export const metadata = pageMetadata(title, description, "/contact");
 

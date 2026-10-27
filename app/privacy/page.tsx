@@ -1,11 +1,14 @@
 import { Icon } from "@/components/icons";
 import SiteFrame from "@/components/site-frame";
-import { pageMetadata } from "@/lib/site";
+import StructuredData from "@/components/structured-data";
+import { pageMetadata, pageSchema } from "@/lib/site";
 
-export const metadata = pageMetadata("حریم خصوصی و اطلاعات فرم", "اطلاعاتی که در فرم درخواست خدمات دکتر رسون ثبت می‌کنید، کاربرد آن‌ها برای هماهنگی خدمت و روش پیگیری درخواست را بخوانید.", "/privacy");
+const title = "حریم خصوصی و اطلاعات فرم";
+const description = "اطلاعاتی که در فرم درخواست خدمات دکتر رسون ثبت می‌کنید، کاربرد آن‌ها برای هماهنگی خدمت و روش پیگیری درخواست را بخوانید.";
+export const metadata = pageMetadata(title, description, "/privacy");
 
 export default function PrivacyPage() {
-  return <SiteFrame><main id="main" tabIndex={-1} className="section"><article className="container policy-content">
+  return <SiteFrame><StructuredData data={pageSchema({ path: "/privacy", title, description })} /><main id="main" tabIndex={-1} className="section"><article className="container policy-content">
     <nav className="breadcrumbs" aria-label="مسیر صفحه"><a href="/">خانه</a><span aria-hidden="true">/</span><span aria-current="page">حریم خصوصی</span></nav>
     <span className="eyebrow"><Icon name="lock" size={20} />اطلاعات شما در مسیر هماهنگی خدمت</span>
     <h1>حریم خصوصی و اطلاعات فرم</h1>
