@@ -19,9 +19,24 @@ export default function ClinicHome() {
     <main id="main" tabIndex={-1}>
       <section className="hero section" aria-labelledby="hero-title">
         <div className="container hero-grid">
-          <div className="hero-copy">
+          <div className="hero-heading">
             <div className="eyebrow"><span className="tiny-line" />ابتدا ویزیت پزشک، سپس اعزام هدفمند</div>
             <h1 id="hero-title">مراقبت در منزل،<br />با <span className="word-gold">راهبری پزشک</span><span className="title-dot">.</span></h1>
+          </div>
+          <div className="hero-visual">
+            <span className="orbit orbit-one" /><span className="orbit orbit-two" />
+            <div className="hero-image-frame">
+              <img src={founder.portrait} srcSet="/images/emad-azadeh-480.webp 480w, /images/emad-azadeh-768.webp 768w, /images/emad-azadeh-1024.webp 1024w" sizes="(max-width: 640px) min(310px, 82vw), (max-width: 900px) 42vw, 440px" decoding="async" loading="eager" alt={`${founder.name}، ${founder.role}؛ پرترهٔ ویرایش‌شده با هوش مصنوعی`} width="1024" height="1280" fetchPriority="high" />
+              <span className="image-side-caption" lang="en">MEDICAL CARE, AROUND YOU.</span>
+            </div>
+            <div className="hero-seal" aria-hidden="true"><Icon name="home" size={27} /><span>پزشک‌محور<br />متناسب با شما</span></div>
+            <div className="image-card">
+              <span className="image-card-icon"><Icon name="stethoscope" size={25} /></span>
+              <div><a href={founder.path}>{founder.name}</a><small>{founder.role}</small></div>
+            </div>
+            <span className="concept-caption">پرترهٔ دکتر عماد آزاده؛ ویرایش با هوش مصنوعی.</span>
+          </div>
+          <div className="hero-copy">
             <p className="hero-description">در دکتر رسون، ابتدا آنلاین با پزشک ویزیت می‌شوید. سپس، بر اساس نیاز شما و نظر پزشک، تیم درمانی مناسب برای خدمات در منزل هماهنگ می‌شود.</p>
             <div className="hero-buttons">
               <BookingButton className="button button-green">درخواست ویزیت آنلاین<Icon name="arrow" size={19} /></BookingButton>
@@ -31,19 +46,6 @@ export default function ClinicHome() {
               <span className="note-icon"><Icon name="shield" size={19} /></span>
               <p>هر اعزام، پس از ارزیابی پزشکی.<span>تزریقات و سرم‌تراپی، در صورت نیاز و با نظر پزشک</span></p>
             </div>
-          </div>
-          <div className="hero-visual">
-            <span className="orbit orbit-one" /><span className="orbit orbit-two" />
-            <div className="hero-image-frame">
-              <img src={founder.portrait} srcSet="/images/emad-azadeh-480.webp 480w, /images/emad-azadeh-768.webp 768w, /images/emad-azadeh-1024.webp 1024w" sizes="(max-width: 640px) 85vw, (max-width: 900px) 42vw, 440px" decoding="async" loading="eager" alt={`${founder.name}، ${founder.role}؛ پرترهٔ ویرایش‌شده با هوش مصنوعی`} width="1024" height="1280" fetchPriority="high" />
-              <span className="image-side-caption" lang="en">MEDICAL CARE, AROUND YOU.</span>
-            </div>
-            <div className="hero-seal" aria-hidden="true"><Icon name="home" size={27} /><span>پزشک‌محور<br />متناسب با شما</span></div>
-            <div className="image-card">
-              <span className="image-card-icon"><Icon name="stethoscope" size={25} /></span>
-              <div><a href={founder.path}>{founder.name}</a><small>{founder.role}</small></div>
-            </div>
-            <span className="concept-caption">پرترهٔ دکتر عماد آزاده؛ ویرایش با هوش مصنوعی.</span>
           </div>
         </div>
         <div className="container hero-bottom">

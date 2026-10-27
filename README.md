@@ -66,6 +66,8 @@ The home page and three service guides render their content on the server. Booki
 
 Responsive WebP images serve smaller versions of the founder portrait. The social sharing card is a static 1200×630 PNG using the same AI-edited portrait. The local font and medical copy constraints remain in place.
 
+The liquid glass theme uses translucent mint and emerald surfaces, static highlights and a floating navigation bar. Home and about pages place the founder portrait between the heading and descriptive copy on mobile, and align it near the top of the desktop layout. Glass surfaces have opaque fallbacks and respect reduced transparency and motion preferences; booking and WhatsApp behavior are unchanged.
+
 ## Source map
 
 - `components/clinic-home.tsx`: physician-led landing page and three service lines.
@@ -82,6 +84,7 @@ Responsive WebP images serve smaller versions of the founder portrait. The socia
 - `app/api/appointments/`: persistent request and tracking handlers.
 - `db/schema.ts` and `drizzle/`: data model and append-only migrations.
 - `app/globals.css` and `app/site-pages.css`: responsive Persian layout, cream/emerald/gold identity.
+- `app/liquid-glass.css`: active glass theme, early portrait layout and accessibility fallbacks.
 
 ## Assets and clinical copy
 

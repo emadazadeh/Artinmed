@@ -2,6 +2,7 @@ import type { Metadata, Viewport } from "next";
 import { site } from "@/lib/site";
 import "./globals.css";
 import "./site-pages.css";
+import "./liquid-glass.css";
 
 export const metadata: Metadata = {
   metadataBase: new URL(site.url),
