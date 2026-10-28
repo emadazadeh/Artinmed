@@ -47,4 +47,4 @@ See [SEO implementation and verification](docs/seo-2026-10-27.md). `/services` i
 
 No token or application secret is stored in the source or deployment archive.
 
-The public Search Console verification file `public/google5b4ed26796eb34ea.html` must keep its exact name and content. Static asset `html_handling` is set to `none` so its `.html` URL returns the file directly. Publishing the file prepares ownership verification; the owner must complete Verify in Search Console.
+The public Search Console verification response at `/google5b4ed26796eb34ea.html` must keep its exact URL and content. `app/google5b4ed26796eb34ea.html/route.ts` serves it directly, avoiding the managed static host's `.html` redirects. Publishing this response prepares ownership verification; the owner must complete Verify in Search Console.

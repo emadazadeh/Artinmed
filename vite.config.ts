@@ -70,8 +70,6 @@ export default defineConfig(async ({ command }) => {
         inspectorPort: false,
         config: {
           ...localBindingConfig,
-          // Verification files must retain their exact .html URL.
-          assets: { html_handling: "none" },
           ...(command === "serve"
             ? {
                 services: [
