@@ -1,6 +1,6 @@
 import type { Metadata } from "next";
 import { services } from "./clinic-data.ts";
-import { contact, founder } from "./brand.ts";
+import { contact, founder, socialProfiles } from "./brand.ts";
 
 // Confirmed public origin. Update this single value when moving to a custom domain.
 export const site = {
@@ -15,7 +15,8 @@ export const publicPaths = ["/", "/services", ...services.map(service => `/servi
 
 // Actual editorial updates, not build time. Leave undated pages out of this map.
 export const pageUpdatedAt: Record<string, string> = {
-  "/": "2026-10-27",
+  "/": "2026-10-28",
+  "/contact": "2026-10-28",
   "/services": "2026-10-27",
   ...Object.fromEntries(services.map(service => [`/services/${service.id}`, "2026-10-27"])),
 };
@@ -58,7 +59,7 @@ export function pageSchema({ path, title, description, questions = [], serviceId
   const websiteId = `${site.url}/#website`;
   const founderId = `${site.url}${founder.path}#founder`;
   const graph: Record<string, unknown>[] = [
-    { "@type": "Organization", "@id": organizationId, name: site.name, alternateName: "Doctor Resoon", url: site.url, logo: `${site.url}/favicon.svg`, telephone: contact.phone, founder: { "@id": founderId }, contactPoint: { "@type": "ContactPoint", telephone: contact.phone, contactType: "هماهنگی خدمات", availableLanguage: "fa-IR", url: `${site.url}/contact` } },
+    { "@type": "Organization", "@id": organizationId, name: site.name, alternateName: "Doctor Resoon", url: site.url, logo: `${site.url}/favicon.svg`, telephone: contact.phone, sameAs: Object.values(socialProfiles).map(profile => profile.href), founder: { "@id": founderId }, contactPoint: { "@type": "ContactPoint", telephone: contact.phone, contactType: "هماهنگی خدمات", availableLanguage: "fa-IR", url: `${site.url}/contact` } },
     { "@type": "Person", "@id": founderId, name: founder.name, jobTitle: founder.role, url: `${site.url}${founder.path}`, image: new URL(founder.portrait, site.url).href, worksFor: { "@id": organizationId } },
     { "@type": "WebSite", "@id": websiteId, name: site.name, url: site.url, inLanguage: "fa-IR", publisher: { "@id": organizationId } },
     { "@type": "WebPage", "@id": `${url}#webpage`, url, name: title, description, inLanguage: "fa-IR", isPartOf: { "@id": websiteId }, about: { "@id": serviceId ? `${url}#service` : organizationId }, dateModified: pageUpdatedAt[path], primaryImageOfPage: { "@type": "ImageObject", url: new URL(site.socialImage, site.url).href, width: 1200, height: 630 } },

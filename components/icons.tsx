@@ -1,6 +1,9 @@
 import type { CSSProperties, ReactNode } from "react";
-export type IconName = "arrow" | "arrow-down" | "menu" | "close" | "sparkle" | "shield" | "calendar" | "leaf" | "check" | "chevron" | "camera" | "upload" | "clock" | "heart" | "face" | "laser" | "drop" | "copy" | "refresh" | "download" | "search" | "lock" | "stethoscope" | "video" | "home" | "syringe" | "phone";
+export type IconName = "arrow" | "arrow-down" | "menu" | "close" | "sparkle" | "shield" | "calendar" | "leaf" | "check" | "chevron" | "camera" | "upload" | "clock" | "heart" | "face" | "laser" | "drop" | "copy" | "refresh" | "download" | "search" | "lock" | "stethoscope" | "video" | "home" | "syringe" | "phone" | "telegram" | "whatsapp" | "instagram";
 const paths: Record<IconName, ReactNode> = {
+  telegram: <><path d="m3 11 18-7-4 16-6-5-4 3v-6l10-5-8 7-6-3Z" /><path d="m11 15-4 3" /></>,
+  whatsapp: <><path d="M20.5 11.6a8.5 8.5 0 0 1-12.7 7.7L3 21l1.6-4.8a8.5 8.5 0 1 1 15.9-4.6Z" /><path d="m8 7 2 3-1 1a7 7 0 0 0 4 4l1-1 3 2c-1 3-4 1-6 0s-5-5-4-7l1-2Z" /></>,
+  instagram: <><rect x="3" y="3" width="18" height="18" rx="5" /><circle cx="12" cy="12" r="4" /><circle cx="17.5" cy="6.5" r=".75" fill="currentColor" stroke="none" /></>,
   phone: <path d="M7 3H4a1 1 0 0 0-1 1c0 9.4 7.6 17 17 17a1 1 0 0 0 1-1v-3l-5-2-2 2a14 14 0 0 1-7-7l2-2-2-5Z" />,
   stethoscope: <><path d="M5 3v5a5 5 0 0 0 10 0V3M3 3h4m6 0h4m-7 10v3a5 5 0 0 0 10 0v-3" /><circle cx="20" cy="10" r="3" /></>,
   video: <><rect x="2" y="5" width="14" height="14" rx="3" /><path d="m16 10 6-4v12l-6-4M7 10h4m-2-2v4" /></>,
