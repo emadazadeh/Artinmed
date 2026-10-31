@@ -9,18 +9,18 @@ import ContactChannels from "./contact-channels";
 export default function SiteFrame({ children, mobileBooking = true }: { children: ReactNode; mobileBooking?: boolean }) {
   return <BookingProvider><div className="home-care-page">
     <a className="skip-link" href="#main">رفتن به محتوای اصلی</a>
-    <div className="announcement"><Icon name="stethoscope" size={15} /><span>تغذیه و ورزش، ویزیت پزشک و مراقبت در منزل</span><span className="announcement-en" lang="en">PERSONAL CARE, BUILT AROUND YOU</span></div>
+    <div className="announcement" role="region" aria-label="معرفی خدمات دکتر رسون"><Icon name="stethoscope" size={15} /><span>تغذیه و ورزش، ویزیت پزشک و مراقبت در منزل</span><span className="announcement-en" lang="en">PERSONAL CARE, BUILT AROUND YOU</span></div>
     <SiteHeader />
     {children}
     <footer className="site-footer">
       <div className="container footer-top">
         <div className="footer-brand"><Brand light /><p>مراقبت حرفه‌ای، متناسب با شما.</p><a className="footer-founder" href={founder.path}>{founder.name} · مدیر و مؤسس</a></div>
         <nav className="footer-links" aria-label="پیوندهای سایت"><a href="/services">همهٔ خدمات دکتر رسون</a><a href="/calorie-counter">کالری‌شمار غذا</a>{services.map(service => <a key={service.id} href={`/services/${service.id}`}>{service.name}</a>)}<a href={founder.path}>دربارهٔ دکتر رسون</a><a href="/contact">تماس با ما</a><TrackingButton>پیگیری درخواست</TrackingButton></nav>
-        <div className="footer-contact"><a className="footer-phone" href={contact.href} aria-label={`تماس با دکتر رسون: ${contact.phoneLabel}`}><Icon name="phone" size={21} /><bdi dir="ltr">{contact.phoneLabel}</bdi></a><span>تماس برای هماهنگی و پرسش دربارهٔ خدمات</span><ContactChannels variant="compact" includePhone={false} /><div className="footer-note"><Icon name="shield" size={22} /><p>هر مسیر، متناسب با نیاز شما.<small>ثبت درخواست به معنی اعزام فوری یا تأیید نهایی نیست.</small></p></div></div>
+        <div className="footer-contact"><a className="footer-phone" href={contact.href} aria-label={`تماس با دکتر رسون: ${contact.phoneLabel}`}><Icon name="phone" size={21} /><bdi dir="ltr">{contact.phoneLabel}</bdi></a><span>تماس برای هماهنگی و پرسش دربارهٔ خدمات</span><ContactChannels variant="compact" includePhone={false} label="شبکه‌های اجتماعی در پاورقی" /><div className="footer-note"><Icon name="shield" size={22} /><p>هر مسیر، متناسب با نیاز شما.<small>ثبت درخواست به معنی اعزام فوری یا تأیید نهایی نیست.</small></p></div></div>
       </div>
       <div className="container care-scope-note">این سامانه برای خدمات غیراورژانسی است. در وضعیت اورژانسی، برای رسیدگی فوری با اورژانس تماس بگیرید.</div>
       <div className="container footer-bottom"><span>© {new Date().getFullYear()} دکتر رسون. تمامی حقوق محفوظ است.</span><a href="/privacy">حریم خصوصی</a><span lang="en">MEDICAL CARE, AROUND YOU</span></div>
     </footer>
-    {mobileBooking && <div className="mobile-booking"><BookingButton><Icon name="calendar" size={19} />ثبت درخواست<Icon name="arrow" size={18} /></BookingButton><TrackingButton className="mobile-track" label="پیگیری درخواست"><Icon name="search" size={22} /></TrackingButton></div>}
+    {mobileBooking && <nav className="mobile-booking" aria-label="دسترسی سریع به ثبت و پیگیری درخواست"><BookingButton><Icon name="calendar" size={19} />ثبت درخواست<Icon name="arrow" size={18} /></BookingButton><TrackingButton className="mobile-track" label="پیگیری درخواست"><Icon name="search" size={22} /></TrackingButton></nav>}
   </div></BookingProvider>;
 }

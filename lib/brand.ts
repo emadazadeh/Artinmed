@@ -23,5 +23,6 @@ export const founder = {
   path: "/about",
   portrait: "/images/emad-azadeh-care-768.webp",
   portraitSrcSet: "/images/emad-azadeh-care-480.webp 480w, /images/emad-azadeh-care-768.webp 768w, /images/emad-azadeh-care-1024.webp 1024w",
+  portraitAvifSet: "/images/emad-azadeh-care-320.avif 320w, /images/emad-azadeh-care-480.avif 480w, /images/emad-azadeh-care-768.avif 768w, /images/emad-azadeh-care-1024.avif 1024w",
   portraitCaption: "پرترهٔ ویرایش‌شده با هوش مصنوعی بر پایهٔ عکس دکتر عماد آزاده.",
 } as const;

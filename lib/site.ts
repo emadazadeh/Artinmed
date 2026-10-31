@@ -1,11 +1,12 @@
 import type { Metadata } from "next";
 import { services } from "./clinic-data.ts";
 import { contact, founder, socialProfiles } from "./brand.ts";
+import { primaryOrigin } from "./site-origin.ts";
 
-// Confirmed public origin. Update this single value when moving to a custom domain.
+// The custom domain is the production identity for all SEO and sharing metadata.
 export const site = {
   name: "دکتر رسون",
-  url: "https://doctor-resoon.cometolive34.chatgpt.site",
+  url: primaryOrigin,
   title: "دکتر رسون | تغذیه و ورزش، ویزیت آنلاین و مراقبت در منزل",
   description: "برنامه تغذیه و ورزش برای چاقی و لاغری، ویزیت آنلاین پزشک، سرم‌تراپی و تیم درمانی در منزل، واکسیناسیون و مراقبت پیشگیرانه؛ ثبت و پیگیری درخواست در دکتر رسون.",
   socialImage: "/images/doctor-resoon-care-social.webp",

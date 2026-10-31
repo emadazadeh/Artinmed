@@ -1,12 +1,13 @@
 import { contactChannels } from "@/lib/brand";
 import { Icon } from "./icons";
 
-export default function ContactChannels({ variant = "cards", includePhone = true }: {
+export default function ContactChannels({ variant = "cards", includePhone = true, label = "راه‌های ارتباط با دکتر رسون" }: {
   variant?: "cards" | "compact";
   includePhone?: boolean;
+  label?: string;
 }) {
   const compact = variant === "compact";
-  return <nav className={`contact-channels contact-channels--${variant}`} aria-label="راه‌های ارتباط با دکتر رسون">
+  return <nav className={`contact-channels contact-channels--${variant}`} aria-label={label}>
     {contactChannels.filter(channel => includePhone || channel.id !== "phone").map(channel => <a
       key={channel.id}
       className={`contact-channel contact-channel--${channel.id}`}

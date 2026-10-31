@@ -2,6 +2,7 @@ import { BookingButton } from "@/components/booking-provider";
 import { Icon, type IconName } from "@/components/icons";
 import SiteFrame from "@/components/site-frame";
 import StructuredData from "@/components/structured-data";
+import FounderPortrait from "@/components/founder-portrait";
 import { contact, founder } from "@/lib/brand";
 import { services } from "@/lib/clinic-data";
 import { pageMetadata, pageSchema } from "@/lib/site";
@@ -19,7 +20,7 @@ export default function AboutPage() {
           <nav className="breadcrumbs" aria-label="مسیر صفحه"><a href="/">خانه</a><span aria-hidden="true">/</span><span aria-current="page">دربارهٔ دکتر رسون</span></nav>
           <div className="founder-grid">
             <div className="founder-heading"><span className="eyebrow">آشنایی با مدیر و مؤسس</span><h1>{founder.name}</h1><p className="founder-role">{founder.role}</p></div>
-            <figure className="founder-portrait"><div><img src={founder.portrait} srcSet={founder.portraitSrcSet} sizes="(max-width: 640px) 85vw, (max-width: 900px) 40vw, 420px" alt={`${founder.name}، ${founder.role}`} width="1024" height="1280" fetchPriority="high" decoding="async" /></div><figcaption>{founder.portraitCaption}</figcaption></figure>
+            <figure className="founder-portrait"><div><FounderPortrait sizes="(max-width: 640px) 85vw, (max-width: 900px) 40vw, 420px" alt={`${founder.name}، ${founder.role}`} /></div><figcaption>{founder.portraitCaption}</figcaption></figure>
             <div className="founder-copy"><p className="founder-intro">دکتر عماد آزاده، مدیر و مؤسس دکتر رسون است. دکتر رسون چهار مسیر فعال برای برنامهٔ تغذیه و ورزش، ویزیت آنلاین پزشک، تراپی و اعزام تیم درمانی به منزل، و واکسیناسیون و مراقبت‌های پیشگیرانه دارد.</p><p>هر مسیر با شناخت هدف و شرایط شما پیش می‌رود. خدمات درمانی با نظر پزشک هماهنگ می‌شوند. آزمایش خون و نمونه‌گیری، و خدمات زیبایی شامل مزوتراپی، بوتاکس و PRP در برنامهٔ توسعه قرار دارند.</p><div className="founder-actions"><BookingButton>ثبت درخواست<Icon name="video" size={18} /></BookingButton><a className="button button-outline" href="/contact">ارتباط با دکتر رسون<Icon name="phone" size={18} /></a></div></div>
           </div>
         </div>

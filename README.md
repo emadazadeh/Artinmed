@@ -34,9 +34,9 @@ Apply committed SQL migrations once to a fresh local D1 before testing forms; pr
 
 ## Hosting and SEO
 
-The existing public Site is https://doctor-resoon.cometolive34.chatgpt.site. Preserve `.openai/hosting.json`, its project ID, DB binding and audience. The owner's separate Cloudflare deployment has its own database; data is not transferred automatically. See [Cloudflare deployment](docs/cloudflare-deployment.md).
+The production domain is https://doctorreson.ir, served by the owner's Cloudflare Worker `doctor-resoon1` through its existing GitHub integration. The original managed Site at https://doctor-resoon.cometolive34.chatgpt.site remains the legacy origin; public page requests redirect to the matching production path after the primary deployment is verified. Verification, robots, sitemap, API and asset endpoints remain available on the legacy origin. Preserve `.openai/hosting.json`, its project ID, DB binding and audience. The owner's separate Cloudflare deployment has its own database; data is not transferred automatically. See [Cloudflare deployment](docs/cloudflare-deployment.md).
 
-See [SEO implementation and verification](docs/seo-2026-10-27.md). `/services` is the crawlable directory for the four active lines. `lib/site.ts` is the origin and metadata source. The sitemap derives all active service routes. Public content renders on the server; booking loads on interaction. The liquid glass theme has opaque fallbacks and respects reduced motion/transparency. Images have responsive WebP variants and versioned filenames. The founder portrait is AI-edited from the owner's photographs; visible captions disclose the edit.
+See the [current custom-domain SEO audit](docs/seo-custom-domain-2026-10-31.md) and [earlier SEO implementation](docs/seo-2026-10-27.md). `/services` is the crawlable directory for the four active lines. `lib/site-origin.ts` owns the confirmed production origin and safe redirect policy; `lib/site.ts` builds metadata from it. The sitemap derives all active service routes. Public content renders on the server; booking loads on interaction. The liquid glass theme has opaque fallbacks and respects reduced motion/transparency. Images have responsive WebP variants and versioned filenames. The founder portrait is AI-edited from the owner's photographs; visible captions disclose the edit.
 
 ## Source map
 
