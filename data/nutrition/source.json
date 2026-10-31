@@ -1,0 +1,17 @@
+{
+  "source": "USDA FoodData Central — SR Legacy",
+  "release": "April 2018 (final SR Legacy release)",
+  "published": "2019-04-01",
+  "retrieved": "2026-10-31",
+  "sourceUrl": "https://fdc.nal.usda.gov/download-datasets/",
+  "archiveUrl": "https://fdc.nal.usda.gov/fdc-datasets/FoodData_Central_sr_legacy_food_csv_2018-04.zip",
+  "archiveSha256": "b80817294b8850530aaedf2e515c02593b1824f763a0ff356e5c2081643e6fd0",
+  "license": "CC0-1.0",
+  "licenseUrl": "https://creativecommons.org/publicdomain/zero/1.0/",
+  "records": 7793,
+  "localized": 79,
+  "excludedMissingEnergy": 0,
+  "energyNutrientId": 1008,
+  "energyUnit": "kcal per 100 g edible portion",
+  "portionRule": "Source gram_weight / source amount; tablespoon derived as cup/16 only if a source cup exists. Teaspoon derived as tablespoon/3 for fats, spices and sweets. Gram basis always available."
+}

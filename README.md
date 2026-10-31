@@ -13,6 +13,12 @@ Blood tests/home sample collection and home aesthetics (mesotherapy, Botox, PRP)
 
 The site collects name, mobile number, city, service and preferred contact time. D1 persists requests and returns a reference. Visitors can preview and open a prepared message to the owner's WhatsApp and press Send themselves. Submission is a coordination request, not a confirmed appointment, automatic program, video call, prescription or dispatch. No clinician credentials, coverage, prices, hours, inventory or guaranteed results are invented.
 
+## Calorie counter
+
+`/calorie-counter` offers food search, portions, per-meal totals and a date-based local diary in the existing liquid glass theme. The pinned USDA SR Legacy catalogue contains 7,793 calorie records, with 79 commonly used Persian names and aliases; the extended catalogue retains original English names. Household portions keep their source gram weights; derived spoons are disclosed. Visitors can also enter a product's label calories and serving grams. Daily entries remain in browser localStorage and are never sent to the server. Search uses the local read-only `/api/foods` catalogue; no nutrition API key or runtime third-party lookup is required. Downloadable CSV: `/data/calorie-foods.csv`.
+
+See [sources, import procedure and verification](docs/calorie-counter.md). This is an educational intake calculator, not a personalized energy target or a fifth booking service.
+
 ## Development
 
 Node 22.13+ and pnpm 11.25.0. Vinext, React, Cloudflare Workers, D1 and Drizzle.

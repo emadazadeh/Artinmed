@@ -11,11 +11,13 @@ export const site = {
   socialImage: "/images/doctor-resoon-care-social.webp",
 } as const;
 
-export const publicPaths = ["/", "/services", ...services.map(service => `/services/${service.id}`), "/about", "/contact", "/privacy"];
+export const publicPaths = ["/", "/services", "/calorie-counter", ...services.map(service => `/services/${service.id}`), "/about", "/contact", "/privacy"];
 
 // Actual editorial updates, not build time. Leave undated pages out of this map.
 export const pageUpdatedAt: Record<string, string> = {
-  "/": "2026-10-28",
+  "/": "2026-10-31",
+  "/calorie-counter": "2026-10-31",
+  "/privacy": "2026-10-31",
   "/contact": "2026-10-28",
   "/services": "2026-10-27",
   ...Object.fromEntries(services.map(service => [`/services/${service.id}`, "2026-10-27"])),

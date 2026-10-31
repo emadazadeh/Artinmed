@@ -1,6 +1,10 @@
 import type { CSSProperties, ReactNode } from "react";
-export type IconName = "arrow" | "arrow-down" | "menu" | "close" | "sparkle" | "shield" | "calendar" | "leaf" | "check" | "chevron" | "camera" | "upload" | "clock" | "heart" | "face" | "laser" | "drop" | "copy" | "refresh" | "download" | "search" | "lock" | "stethoscope" | "video" | "home" | "syringe" | "phone" | "telegram" | "whatsapp" | "instagram";
+export type IconName = "arrow" | "arrow-down" | "menu" | "close" | "sparkle" | "shield" | "calendar" | "leaf" | "check" | "chevron" | "camera" | "upload" | "clock" | "heart" | "face" | "laser" | "drop" | "copy" | "refresh" | "download" | "search" | "lock" | "stethoscope" | "video" | "home" | "syringe" | "phone" | "telegram" | "whatsapp" | "instagram" | "bowl" | "plus" | "trash" | "edit";
 const paths: Record<IconName, ReactNode> = {
+  bowl: <><path d="M3 10h18a9 9 0 0 1-18 0Zm5 11h8M8 3v3m4-4v4m4-3v3" /></>,
+  plus: <path d="M12 5v14M5 12h14" />,
+  trash: <><path d="M3 6h18M9 6V3h6v3M5 6l1 15h12l1-15M10 10v7m4-7v7" /></>,
+  edit: <><path d="m15 4 5 5M4 20l5-1L21 7l-5-5L4 14v6ZM3 22h18" /></>,
   telegram: <><path d="m3 11 18-7-4 16-6-5-4 3v-6l10-5-8 7-6-3Z" /><path d="m11 15-4 3" /></>,
   whatsapp: <><path d="M20.5 11.6a8.5 8.5 0 0 1-12.7 7.7L3 21l1.6-4.8a8.5 8.5 0 1 1 15.9-4.6Z" /><path d="m8 7 2 3-1 1a7 7 0 0 0 4 4l1-1 3 2c-1 3-4 1-6 0s-5-5-4-7l1-2Z" /></>,
   instagram: <><rect x="3" y="3" width="18" height="18" rx="5" /><circle cx="12" cy="12" r="4" /><circle cx="17.5" cy="6.5" r=".75" fill="currentColor" stroke="none" /></>,
